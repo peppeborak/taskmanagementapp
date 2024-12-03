@@ -29,3 +29,11 @@ export const getUserDb = async (email) => {
   )
   return rows[0] // Return the first matching user
 }
+
+export const createListDb = async (userId, listName) => {
+    const [list] = await pool.query(
+      'INSERT INTO lists (userId, name) VALUES (?, ?)',
+      [userId, listName]
+    )
+    return list
+  }
