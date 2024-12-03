@@ -1,40 +1,31 @@
-import mysql from 'mysql2'
+import mysql from 'mysql2/promise'
 
-const connection = mysql.createConnection({
+const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
   password: 'kalle123',
   database: 'task_management_db',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 })
 
-connection.connect((error) => {
-  if (error) {
-    console.error('Error connecting to MySQL database:', error)
-  } else {
-    console.log('Connected to MySQL database!')
-  }
-})
-
-export const createUserDb = (email, password) => {
-  return new Promise((resolve, reject) => {
-    connection.query(
-      `INSERT INTO users (email, passwordHash) VALUES (?, ?)`,
-      [email, password],
-      (err, result) => {
-        if (err) return reject(err)
-        resolve(result)
-      }
+export const createUserDb = async (email, passwordHash) => {
+  try {
+    const [result] = await pool.query(
+      'INSERT INTO users (email, passwordHash) VALUES (?, ?)',
+      [email, passwordHash]
     )
-  })
+    return result // Contains metadata about the query (e.g., insertId)
+  } catch (err) {
+    throw err
+  }
 }
 
 export const getUserDb = async (email) => {
-  return new Promise((resolve, reject) => {
-    const [rows] = connection.query(
-      'SELECT id, email, password FROM users WHERE email = ?',
-      [email]
-    )
-    if (err) return reject(err)
-    resolve(rows[0])
-  })
+  const [rows] = await pool.query(
+    'SELECT id, email, passwordHash FROM users WHERE email = ?',
+    [email]
+  )
+  return rows[0] // Return the first matching user
 }
