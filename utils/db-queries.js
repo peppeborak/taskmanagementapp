@@ -11,15 +11,11 @@ const pool = mysql.createPool({
 })
 
 export const createUserDb = async (email, passwordHash) => {
-  try {
-    const [result] = await pool.query(
-      'INSERT INTO users (email, passwordHash) VALUES (?, ?)',
-      [email, passwordHash]
-    )
-    return result // Contains metadata about the query (e.g., insertId)
-  } catch (err) {
-    throw err
-  }
+  const [result] = await pool.query(
+    'INSERT INTO users (email, passwordHash) VALUES (?, ?)',
+    [email, passwordHash]
+  )
+  return result // Contains metadata about the query (e.g., insertId)
 }
 
 export const getUserDb = async (email) => {
@@ -30,10 +26,17 @@ export const getUserDb = async (email) => {
   return rows[0] // Return the first matching user
 }
 
-export const createListDb = async (userId, listName) => {
-    const [list] = await pool.query(
-      'INSERT INTO lists (userId, name) VALUES (?, ?)',
-      [userId, listName]
-    )
-    return list
-  }
+export const listCreateDb = async (userId, listName) => {
+  const [list] = await pool.query(
+    'INSERT INTO lists (userId, name) VALUES (?, ?)',
+    [userId, listName]
+  )
+  return list
+}
+
+export const listFetchAllDb = async (userId) => {
+  const [lists] = await pool.query('SELECT * FROM lists WHERE userId = ?', [
+    userId,
+  ])
+  return [lists]
+}

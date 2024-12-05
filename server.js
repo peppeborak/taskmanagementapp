@@ -1,7 +1,8 @@
 import express from 'express'
 import { signupHandler } from './handlers/signup-handler.js'
 import { loginHandler } from './handlers/login-handler.js'
-import { createListHandler } from './handlers/create-list.js'
+import { listFetchAllHandler } from './handlers/list-fetch-all-handler.js'
+import { listCreateHandler } from './handlers/list-create-handler.js'
 const app = express()
 const PORT = 3000
 
@@ -15,9 +16,9 @@ app.get('/', (req, res) => {
 app.post('/signup', signupHandler)
 app.post('/login', loginHandler)
 
-// Create list
-app.post('/lists', createListHandler)
-
+// List endpoints
+app.post('/lists', listCreateHandler)
+app.get('/lists', listFetchAllHandler)
 
 app.listen(PORT, () => {
   console.log('Server running on port:', PORT)
