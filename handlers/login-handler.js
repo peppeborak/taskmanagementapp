@@ -1,8 +1,10 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { getUserDb } from '../utils/db-queries.js'
+import dotenv from 'dotenv'
+dotenv.config()
 
-const SECRET_KEY = 'Peppe'
+const SECRET_KEY = process.env.JWT_SECRET
 
 export const loginHandler = async (req, res) => {
   try {
