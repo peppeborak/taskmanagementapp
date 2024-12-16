@@ -2,7 +2,9 @@ import { listCreateDb } from '../utils/db-queries.js'
 
 export const listCreateHandler = async (req, res) => {
   try {
-    const { userId, listName } = req.body
+    const { listName } = req.body
+    const userId = req.user.id
+    console.log(`User ID: ${userId}, List Name: ${listName}`);
 
     // Validate listName
     if (!listName || listName.trim() == '') {
@@ -10,7 +12,7 @@ export const listCreateHandler = async (req, res) => {
     }
     // Validate userId
     if (!userId) {
-      return res.status(400).json({ message:'User id is required'})
+      return res.status(400).json({ message: 'User id is required' })
     }
     // Query database
     const listId = await listCreateDb(userId, listName)

@@ -3,8 +3,8 @@ import { listFetchOneDb } from '../utils/db-queries.js'
 export const listFetchOneHandler = async (req, res) => {
   try {
     const listId = req.params.id
-    const { userId } = req.body
-
+    const userId = req.user.id
+    
     // Validate userId
     if (!userId) {
       return res.status(400).json({ message: 'User id is required'})

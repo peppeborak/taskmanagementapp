@@ -7,6 +7,7 @@ import { listFetchOneHandler } from './handlers/list-fetch-one-handler.js'
 import { listDeleteHandler } from './handlers/list-delete-handler.js'
 import { listUpdateHandler } from './handlers/list-update-handler.js'
 import dotenv from 'dotenv'
+import { authenticateToken } from './middlewares/authenticate-token.js'
 dotenv.config()
 const app = express()
 
@@ -16,12 +17,12 @@ app.use(express.json())
 app.post('/signup', signupHandler)
 app.post('/login', loginHandler)
 
-// List endpoints
-app.post('/lists', listCreateHandler)
-app.get('/lists', listFetchAllHandler)
-app.get('/lists/:id', listFetchOneHandler)
-app.delete('/lists/:id', listDeleteHandler)
-app.put('/lists/:id', listUpdateHandler)
+// Secure list endpoints
+app.post('/lists', authenticateToken, listCreateHandler)
+app.get('/lists', authenticateToken, listFetchAllHandler)
+app.get('/lists/:id', authenticateToken, listFetchOneHandler)
+app.delete('/lists/:id', authenticateToken, listDeleteHandler)
+app.put('/lists/:id', authenticateToken, listUpdateHandler)
 
 app.listen(process.env.PORT, () => {
   console.log('Server running on port:', process.env.PORT)

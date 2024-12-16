@@ -2,7 +2,7 @@ import { listFetchAllDb } from '../utils/db-queries.js'
 
 export const listFetchAllHandler = async (req, res) => {
   try {
-    const { userId } = req.body
+    const userId = req.user.id
 
     // Validate
     if (!userId) {
@@ -12,6 +12,7 @@ export const listFetchAllHandler = async (req, res) => {
     // Query database
     const [result] = await listFetchAllDb(userId)
 
+    // Respond with all lists
     return res.status(200).json({ result })
   } catch (err) {
     console.error(err)

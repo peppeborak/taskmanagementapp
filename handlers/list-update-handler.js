@@ -3,7 +3,8 @@ import { listUpdateDb, listFetchOneDb } from '../utils/db-queries.js'
 export const listUpdateHandler = async (req, res) => {
   try {
     const listId = req.params.id
-    const { listName, userId } = req.body
+    const { listName } = req.body
+    const userId = req.user.id
 
     // Validate list
     if (!listName || listName.trim() === '') {
