@@ -4,20 +4,24 @@ export const listCreateHandler = async (req, res) => {
   try {
     const { userId, listName } = req.body
 
-    // Validate input
+    // Validate listName
     if (!listName || listName.trim() == '') {
-      return res.status(400).send('List name is required')
+      return res.status(400).json({ message: 'List name is required' })
     }
-
+    // Validate userId
     if (!userId) {
-      return res.status(400).send('User id is required')
+      return res.status(400).json({ message:'User id is required'})
     }
+    // Query database
+    const listId = await listCreateDb(userId, listName)
 
-    await listCreateDb(userId, listName)
-
-    return res.status(201).send('Successfully created List')
+    // Respond with the list
+    return res.status(201).json({
+      message: 'Successfully created list',
+      list: { id: listId, userId, name: listName },
+    })
   } catch (err) {
     console.error(err)
-    return res.status(500).send('Internal Server Error')
+    return res.status(500).json({ message: 'Internal Server Error' })
   }
 }

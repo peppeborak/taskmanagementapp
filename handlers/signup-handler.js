@@ -16,12 +16,12 @@ export const signupHandler = async (req, res) => {
     // Store the user in the database
     const result = await createUserDb(email, hashedPassword)
 
-    // Send response
+    // Send the result
     return res
       .status(201)
-      .send({ message: 'User created successfully', result })
+      .json({ message: 'User created successfully', result })
   } catch (err) {
     console.error(err)
-    return res.status(500).send('Internal Server Error')
+    return res.status(500).json({ message: 'Internal Server Error' })
   }
 }

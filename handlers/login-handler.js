@@ -8,12 +8,12 @@ export const loginHandler = async (req, res) => {
   try {
     const { email, password } = req.body
 
-    // Validate input
+    // Validate email and password
     if (!email || !password) {
       return res.status(400).send('Email and password are required')
     }
 
-    // Fetch the user from the database
+    // Query the user from the database
     const user = await getUserDb(email)
 
     // Check if user exists
