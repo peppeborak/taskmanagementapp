@@ -4,14 +4,13 @@ export const listCreateHandler = async (req, res) => {
   try {
     const { listName } = req.body
     const userId = req.user.id
-    console.log(`User ID: ${userId}, List Name: ${listName}`);
 
     // Validate listName
     if (!listName || listName.trim() == '') {
       return res.status(400).json({ message: 'List name is required' })
     }
     // Validate userId
-    if (!userId) {
+    if (!listId || isNaN(listId)) {
       return res.status(400).json({ message: 'User id is required' })
     }
     // Query database
