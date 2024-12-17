@@ -4,8 +4,8 @@ export const listFetchAllHandler = async (req, res) => {
   try {
     const userId = req.user.id
 
-    // Validate
-    if (!listId || isNaN(listId)) {
+    // Validate user id
+    if (!userId || isNaN(userId)) {
       return res.status(400).json({ message: 'User id is required' })
     }
 

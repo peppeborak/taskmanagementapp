@@ -17,7 +17,7 @@ export const listUpdateHandler = async (req, res) => {
     }
 
     // Validate userId
-    if (!userId) {
+    if (!userId || isNaN(userId)) {
       return res.status(400).json({ message: 'User id is required' }  )
     }
 
