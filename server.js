@@ -10,6 +10,7 @@ import dotenv from 'dotenv'
 import { authenticateToken } from './middlewares/authenticate-token.js'
 import { taskCreateHandler } from './handlers/task-create-handler.js'
 import { taskFetchAllHandler } from './handlers/task-fetch-all-handler.js'
+import { taskFetchOneHandler } from './handlers/task-fetch-one-handler.js'
 dotenv.config()
 const app = express()
 
@@ -31,6 +32,7 @@ app.put('/lists/:id', authenticateToken, listUpdateHandler)
 // Task endpoints
 app.post('/tasks', authenticateToken, taskCreateHandler)
 app.get('/tasks', authenticateToken, taskFetchAllHandler)
+app.get('/tasks/:id', authenticateToken, taskFetchOneHandler)
 
 
 // Server

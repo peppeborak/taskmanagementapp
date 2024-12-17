@@ -44,11 +44,11 @@ export const listFetchAllDb = async (userId) => {
 }
 
 export const listFetchOneDb = async (userId, listId) => {
-  const [rows] = await pool.query(
+  const [list] = await pool.query(
     'SELECT * FROM lists WHERE userId = ? AND id = ?',
     [userId, listId]
   )
-  return rows[0] // Returns the first object in the array
+  return list[0] // Returns the first object in the array
 }
 
 export const listDeleteDb = async (userId, listId) => {
@@ -88,4 +88,12 @@ export const taskFetchAllDb = async (userId) => {
     userId,
   ])
   return [tasks] // Returns an array with all the tasks
+}
+
+export const taskFetchOneDb = async (userId, taskId) => {
+  const [task] = await pool.query(
+    'SELECT * FROM tasks WHERE userId = ? AND id = ?',
+    [userId, taskId]
+  )
+  return task[0] // Returns the first object in the array
 }
