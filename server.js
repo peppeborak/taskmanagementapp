@@ -6,37 +6,37 @@ import { listCreateHandler } from './handlers/list-create-handler.js'
 import { listFetchOneHandler } from './handlers/list-fetch-one-handler.js'
 import { listDeleteHandler } from './handlers/list-delete-handler.js'
 import { listUpdateHandler } from './handlers/list-update-handler.js'
-import dotenv from 'dotenv'
 import { authenticateToken } from './middlewares/authenticate-token.js'
 import { taskCreateHandler } from './handlers/task-create-handler.js'
 import { taskFetchAllHandler } from './handlers/task-fetch-all-handler.js'
 import { taskFetchOneHandler } from './handlers/task-fetch-one-handler.js'
 import { taskUpdateHandler } from './handlers/task-update-handler.js'
 import { taskDeleteHandler } from './handlers/task-delete-handler.js'
+import dotenv from 'dotenv'
 dotenv.config()
 const app = express()
 
 app.use(express.json())
 
 // Authentication
-app.post('/signup', signupHandler)
-app.post('/login', loginHandler)
+app.post('/api/v1/signup', signupHandler)
+app.post('/api/v1/login', loginHandler)
 
-// Secure list endpoints
+// Secure endpoints
 
 // List endpoints
-app.post('/lists', authenticateToken, listCreateHandler)
-app.get('/lists', authenticateToken, listFetchAllHandler)
-app.get('/lists/:id', authenticateToken, listFetchOneHandler)
-app.put('/lists/:id', authenticateToken, listUpdateHandler)
-app.delete('/lists/:id', authenticateToken, listDeleteHandler)
+app.post('/api/v1/lists', authenticateToken, listCreateHandler)
+app.get('/api/v1/lists', authenticateToken, listFetchAllHandler)
+app.get('/api/v1/lists/:id', authenticateToken, listFetchOneHandler)
+app.put('/api/v1/lists/:id', authenticateToken, listUpdateHandler)
+app.delete('/api/v1/lists/:id', authenticateToken, listDeleteHandler)
 
 // Task endpoints
-app.post('/tasks', authenticateToken, taskCreateHandler)
-app.get('/tasks', authenticateToken, taskFetchAllHandler)
-app.get('/tasks/:id', authenticateToken, taskFetchOneHandler)
-app.put('/tasks/:id', authenticateToken, taskUpdateHandler)
-app.delete('/tasks/:id', authenticateToken, taskDeleteHandler)
+app.post('/api/v1/tasks', authenticateToken, taskCreateHandler)
+app.get('/api/v1/tasks', authenticateToken, taskFetchAllHandler)
+app.get('/api/v1/tasks/:id', authenticateToken, taskFetchOneHandler)
+app.put('/api/v1/tasks/:id', authenticateToken, taskUpdateHandler)
+app.delete('/api/v1/tasks/:id', authenticateToken, taskDeleteHandler)
 
 
 // Server
