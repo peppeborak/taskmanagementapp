@@ -8,6 +8,7 @@ import { listDeleteHandler } from './handlers/list-delete-handler.js'
 import { listUpdateHandler } from './handlers/list-update-handler.js'
 import dotenv from 'dotenv'
 import { authenticateToken } from './middlewares/authenticate-token.js'
+import { taskCreateHandler } from './handlers/task-create-handler.js'
 dotenv.config()
 const app = express()
 
@@ -23,6 +24,8 @@ app.get('/lists', authenticateToken, listFetchAllHandler)
 app.get('/lists/:id', authenticateToken, listFetchOneHandler)
 app.delete('/lists/:id', authenticateToken, listDeleteHandler)
 app.put('/lists/:id', authenticateToken, listUpdateHandler)
+
+app.post('/tasks', authenticateToken, taskCreateHandler)
 
 app.listen(process.env.PORT, () => {
   console.log('Server running on port:', process.env.PORT)

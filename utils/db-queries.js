@@ -17,7 +17,7 @@ export const createUserDb = async (email, passwordHash) => {
     'INSERT INTO users (email, passwordHash) VALUES (?, ?)',
     [email, passwordHash]
   )
-  return result
+  return result // Returns ?
 }
 
 export const getUserDb = async (email) => {
@@ -25,7 +25,7 @@ export const getUserDb = async (email) => {
     'SELECT id, email, passwordHash FROM users WHERE email = ?',
     [email]
   )
-  return rows[0]
+  return rows[0] // Returns user
 }
 
 export const listCreateDb = async (userId, listName) => {
@@ -33,7 +33,6 @@ export const listCreateDb = async (userId, listName) => {
     'INSERT INTO lists (userId, name) VALUES (?, ?)',
     [userId, listName]
   )
-  console.log(list)
   return list.insertId // Returns the id of the new list
 }
 
@@ -69,4 +68,17 @@ export const listUpdateDb = async (newListName, userId, listId) => {
     [newListName, userId, listId]
   )
   return list.affectedRows // Returns the number of rows updated
+}
+
+export const taskCreateDb = async (
+  userId,
+  listId,
+  taskTitle,
+  taskDescription
+) => {
+  const [task] = await pool.query(
+    'INSERT INTO tasks (userId, listId, title, description) VALUES (?, ?, ?, ?)',
+    [userId, listId, taskTitle, taskDescription]
+  )
+  return task.insertId // Returns the id of the new task
 }
