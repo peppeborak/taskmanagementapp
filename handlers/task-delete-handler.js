@@ -16,10 +16,10 @@ export const taskDeleteHandler = async (req, res) => {
     }
 
     // Query database
-    const rowsdeleted = taskDeleteDb(userId, taskId)
+    const rowsDeleted = await taskDeleteDb(userId, taskId)
     // Check if query was successful
-    if (rowsdeleted === 0) {
-      res.send(400).json({ message: 'Failed to delete task' })
+    if (rowsDeleted === 0) {
+      res.status(400).json({ message: 'Failed to delete task' })
     }
 
     // Respond with a success message
