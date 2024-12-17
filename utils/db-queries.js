@@ -51,14 +51,6 @@ export const listFetchOneDb = async (userId, listId) => {
   return list[0] // Returns the first object in the array
 }
 
-export const listDeleteDb = async (userId, listId) => {
-  const [list] = await pool.query(
-    'DELETE FROM lists WHERE userId = ? AND id = ?',
-    [userId, listId]
-  )
-  return list.affectedRows // Returns the number of rows deleted
-}
-
 export const listUpdateDb = async (newListName, userId, listId) => {
   const [list] = await pool.query(
     `
@@ -67,8 +59,17 @@ export const listUpdateDb = async (newListName, userId, listId) => {
     WHERE userId = ? AND id = ?`,
     [newListName, userId, listId]
   )
-  return list.affectedRows // Returns the number of rows updated
+  return list.affectedRows // Returns the number of rows updated (should be 1 or 0)
 }
+
+export const listDeleteDb = async (userId, listId) => {
+  const [list] = await pool.query(
+    'DELETE FROM lists WHERE userId = ? AND id = ?',
+    [userId, listId]
+  )
+  return list.affectedRows // Returns the number of rows deleted
+}
+
 
 export const taskCreateDb = async (
   userId,
@@ -96,4 +97,15 @@ export const taskFetchOneDb = async (userId, taskId) => {
     [userId, taskId]
   )
   return task[0] // Returns the first object in the array
+}
+
+export const taskUpdateDb = async (newTaskTitle, userId, taskId) => {
+  const [task] = await pool.query(
+    `
+    UPDATE tasks 
+    SET title = ?
+    WHERE userId = ? AND id = ?`,
+    [newTaskTitle, userId, taskId]
+  )
+  return task.affectedRows // Returns the number of rows updated (should be 1 or 0)
 }
