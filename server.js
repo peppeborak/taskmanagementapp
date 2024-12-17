@@ -12,6 +12,7 @@ import { taskCreateHandler } from './handlers/task-create-handler.js'
 import { taskFetchAllHandler } from './handlers/task-fetch-all-handler.js'
 import { taskFetchOneHandler } from './handlers/task-fetch-one-handler.js'
 import { taskUpdateHandler } from './handlers/task-update-handler.js'
+import { taskDeleteHandler } from './handlers/task-delete-handler.js'
 dotenv.config()
 const app = express()
 
@@ -35,7 +36,7 @@ app.post('/tasks', authenticateToken, taskCreateHandler)
 app.get('/tasks', authenticateToken, taskFetchAllHandler)
 app.get('/tasks/:id', authenticateToken, taskFetchOneHandler)
 app.put('/tasks/:id', authenticateToken, taskUpdateHandler)
-
+app.delete('/tasks/:id', authenticateToken, taskDeleteHandler)
 
 
 // Server

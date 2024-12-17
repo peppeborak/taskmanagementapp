@@ -70,7 +70,6 @@ export const listDeleteDb = async (userId, listId) => {
   return list.affectedRows // Returns the number of rows deleted
 }
 
-
 export const taskCreateDb = async (
   userId,
   listId,
@@ -108,4 +107,15 @@ export const taskUpdateDb = async (newTaskTitle, userId, taskId) => {
     [newTaskTitle, userId, taskId]
   )
   return task.affectedRows // Returns the number of rows updated (should be 1 or 0)
+}
+
+export const taskDeleteDb = async (userId, taskId) => {
+  const [task] = await pool.query(
+    `
+    UPDATE tasks 
+    SET isDeleted = 1
+    WHERE userId = ? AND id = ?`,
+    [userId, taskId]
+  )
+  return task.affectedRows // Returns the number of rows deleted
 }
