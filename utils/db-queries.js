@@ -82,3 +82,10 @@ export const taskCreateDb = async (
   )
   return task.insertId // Returns the id of the new task
 }
+
+export const taskFetchAllDb = async (userId) => {
+  const [tasks] = await pool.query('SELECT * FROM tasks WHERE userId = ?', [
+    userId,
+  ])
+  return [tasks] // Returns an array with all the tasks
+}
