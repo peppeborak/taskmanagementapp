@@ -5,7 +5,7 @@ export const taskUpdateHandler = async (req, res) => {
     const taskId = req.params.id
     const { newTaskTitle } = req.body
     const userId = req.user.id
-    console.log(taskId)
+
     // Validate userId
     if (!userId || isNaN(userId)) {
       return res.status(400).json({ message: 'User id is required' })
@@ -23,7 +23,7 @@ export const taskUpdateHandler = async (req, res) => {
     if (rowsAffected === 0) {
       return res
         .status(404)
-        .json({ message: 'Task not found or not authorized' })
+        .json({ message: 'Failed to update the task' })
     }
 
     // Respond with the updated list name

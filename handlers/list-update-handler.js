@@ -28,7 +28,7 @@ export const listUpdateHandler = async (req, res) => {
     if (rowsAffected === 0) {
       return res
         .status(404)
-        .json({ message: 'List not found or not authorized' })
+        .json({ message: 'Failed to update list' })
     }
 
     // Respond with the updated list name

@@ -22,10 +22,10 @@ export const listDeleteHandler = async (req, res) => {
 
     // Check if query failed
     if (rowsDeleted === 0) {
-      return res.status(400).json({ message: 'Failed to delete the list.' })
+      return res.status(400).json({ message: 'Failed to delete list' })
     }
 
-    // Respond with
+    // Respond with a success message
     return res.status(200).json({ message: 'Successfully deleted list' })
   } catch (err) {
     console.error(err)
