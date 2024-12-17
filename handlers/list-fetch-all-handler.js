@@ -3,7 +3,7 @@ import { listFetchAllDb } from '../utils/db-queries.js'
 export const listFetchAllHandler = async (req, res) => {
   try {
     const userId = req.user.id
-
+    
     // Validate user id
     if (!userId || isNaN(userId)) {
       return res.status(400).json({ message: 'User id is required' })

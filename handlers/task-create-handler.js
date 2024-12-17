@@ -4,7 +4,6 @@ export const taskCreateHandler = async (req, res) => {
   try {
     const { listId, taskTitle, taskDescription } = req.body
     const userId = req.user.id
-    console.log(`User ID: ${userId}, Task Name: ${taskTitle}`)
 
     // Validate taskName
     if (!taskTitle || taskTitle.trim() == '') {

@@ -7,7 +7,7 @@ export const signupHandler = async (req, res) => {
 
     // Validate input
     if (!email || !password) {
-      return res.status(400).send('Email and password are required')
+      return res.status(400).send('Email and password is required')
     }
 
     // Hash the password
