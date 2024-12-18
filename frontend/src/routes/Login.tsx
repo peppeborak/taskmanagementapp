@@ -7,60 +7,73 @@ import {
   CardActions,
   Container,
   Box,
+  ThemeProvider,
+  CssBaseline,
 } from '@mui/material'
+import { lightTheme, darkTheme } from '../theme/theme' // Import both themes
+import { useState } from 'react'
+
 
 export const Login = () => {
+  const [isDarkMode, setIsDarkMode] = useState(true) // State to toggle themes
+
   return (
-    <Container
-      maxWidth="sm" // Set container to small
-      sx={{
-        display: 'flex', // Use flexbox to layout the content inside the container
-        justifyContent: 'center', // Center all the components inside
-        alignItems: 'center', // Center all the items
-        height: '100vh', // Limit height to 100px
-      }}
-    >
-      <Card
+    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+      <CssBaseline />
+      <Container
+        maxWidth="sm" // Set container to small
         sx={{
-          width: '100%', // Let the card fill the entire available width
-          maxWidth: 400, // Set a maximum width of 400px for the card, so it doesn't stretch too wide
-          padding: 2, // Add padding inside the card to create space around the content
+          display: 'flex', // Use flexbox to layout the content inside the container
+          justifyContent: 'center', // Center all the components inside
+          alignItems: 'center', // Center all the items
+          height: '100vh', // Limit height to 100px
         }}
       >
-        <CardContent>
-          <Typography variant="h5" gutterBottom align="center">
-            Login
-          </Typography>
+        <Card
+          sx={{
+            width: '100%', // Let the card fill the entire available width
+            maxWidth: 400, // Set a maximum width of 400px for the card, so it doesn't stretch too wide
+            padding: 2, // Add padding inside the card to create space around the content
+          }}
+        >
+          <CardContent>
+            <Typography variant="h5" gutterBottom align="center">
+              Login
+            </Typography>
 
-          <Box
-            sx={{
-              display: 'flex', // Use flexbox to layout the content inside the Box
-              flexDirection: 'column', // Stack the items vertically (column direction)
-              gap: 2, // Add a gap between the elements inside the Box (TextFields)
-            }}
-          >
-            <TextField
-              id="email"
-              label="Email"
-              variant="outlined"
-              fullWidth /* Make the TextField take up the full width of the parent container (Box) */
-            />
-            <TextField
-              id="password"
-              label="Password"
-              type="password"
-              autoComplete="current-password"
-              variant="outlined"
-              fullWidth
-            />
-          </Box>
-        </CardContent>
-        <CardActions sx={{ justifyContent: 'center' }}>
-          <Button variant="contained" size="large">
-            Login
-          </Button>
-        </CardActions>
-      </Card>
-    </Container>
+            <Box
+              sx={{
+                display: 'flex', // Use flexbox to layout the content inside the Box
+                flexDirection: 'column', // Stack the items vertically (column direction)
+                gap: 2, // Add a gap between the elements inside the Box (TextFields)
+              }}
+            >
+              <TextField
+                id="email"
+                label="Email"
+                variant="outlined"
+                fullWidth /* Make the TextField take up the full width of the parent container (Box) */
+              />
+              <TextField
+                id="password"
+                label="Password"
+                type="password"
+                autoComplete="current-password"
+                variant="outlined"
+                fullWidth
+              />
+            </Box>
+          </CardContent>
+          <CardActions sx={{ justifyContent: 'center' }}>
+            <Button variant="contained" size="large">
+              Login
+            </Button>
+            <Button variant="contained" size="large" onClick={() => setIsDarkMode(!isDarkMode)}>
+              Toggle Dark Mode
+            </Button>
+          </CardActions>
+        </Card>
+      </Container>
+    </ThemeProvider>
   )
 }
