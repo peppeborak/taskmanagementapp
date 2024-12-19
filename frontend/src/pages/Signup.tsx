@@ -1,7 +1,4 @@
-
-
 export const Signup = () => {
-  return (
-    <div>Signup</div>
-  )
+  // Try to use reusable components
+  return <div>Signup</div>
 }

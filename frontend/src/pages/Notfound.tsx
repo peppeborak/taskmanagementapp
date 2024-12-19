@@ -1,6 +1,4 @@
-
 export const Notfound = () => {
-  return (
-    <div>Notfound</div>
-  )
+  // Try to use reusable components
+  return <div>Notfound</div>
 }
