@@ -33,7 +33,7 @@ export const loginPost = async ({
   }
 }
 
-export const ListsFetchAllFromApi = async () => {
+export const listsFetchAllFromApi = async () => {
   try {
     const token = localStorage.getItem('token') // Get token from storage
     const response = await api.get('/lists', {
@@ -43,6 +43,22 @@ export const ListsFetchAllFromApi = async () => {
       },
     })
     return response.data // Return the array of lists
+  } catch (error) {
+    console.error('Error:', error)
+    throw error // Throw the error so it can be caught in useEffect
+  }
+}
+
+export const tasksFetchAllFromApi = async (listId: number) => {
+  try {
+    const token = localStorage.getItem('token') // Get token from storage
+    const response = await api.get(`/lists/${listId}`, {
+      // Pass URL and config
+      headers: {
+        Authorization: `Bearer ${token}`, // Attach token
+      },
+    })
+    return response.data // Return the array of tasks
   } catch (error) {
     console.error('Error:', error)
     throw error // Throw the error so it can be caught in useEffect
