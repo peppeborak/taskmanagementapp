@@ -36,7 +36,7 @@ export const loginHandler = async (req, res) => {
     })
 
     // Respond with the token
-    return res.status(200).json({ message: 'Login successful!', token })
+    return res.status(200).json({ message: 'Login successful!', email: user.email, token })
   } catch (err) {
     console.error(err)
     return res.status(500).json({ message: 'An error occurred during login.' })

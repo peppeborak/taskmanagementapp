@@ -8,6 +8,8 @@ import {
   Box,
 } from '@mui/material'
 import { useState } from 'react'
+import { loginPost } from '../services/api.ts'
+import { useNavigate } from 'react-router-dom'
 
 type Props = {
   setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>
@@ -17,13 +19,19 @@ type Props = {
 export const LoginCard = ({ setIsDarkMode, isDarkMode }: Props) => {
   const [password, setPassword] = useState('') // Store user entered password
   const [email, setEmail] = useState('') // Store user entered password
+  const navigate = useNavigate()
 
-
-  // Handle Login button
-  const handleLoginButtonOnClick = () => {
-    console.log('Email submitted:', email)
-
-    console.log('Password submitted:', password)
+  // Handle Login request
+  const handleLoginButtonOnClick = async () => {
+    try {
+      const data = await loginPost({ email, password })
+      localStorage.setItem('token', data.token) // Save token in local storage
+      console.log('Login successful')
+      navigate('/dashboard') // Navigate to their dashboard when login is successful
+    } catch (error: any) {
+      console.log('Error:', error)
+      throw error
+    }
   }
 
   // Handle password onChange

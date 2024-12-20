@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import { signupHandler } from './handlers/signup-handler.js'
 import { loginHandler } from './handlers/login-handler.js'
 import { listFetchAllHandler } from './handlers/list-fetch-all-handler.js'
@@ -16,6 +17,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 const app = express()
 
+app.use(cors())
 app.use(express.json())
 
 // Authentication
@@ -37,7 +39,6 @@ app.get('/api/v1/tasks', authenticateToken, taskFetchAllHandler)
 app.get('/api/v1/tasks/:id', authenticateToken, taskFetchOneHandler)
 app.put('/api/v1/tasks/:id', authenticateToken, taskUpdateHandler)
 app.delete('/api/v1/tasks/:id', authenticateToken, taskDeleteHandler)
-
 
 // Server
 app.listen(process.env.PORT, () => {
