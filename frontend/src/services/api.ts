@@ -21,16 +21,31 @@ export const loginPost = async ({
   password,
 }: LoginRequestProps): Promise<LoginResponse> => {
   try {
-    // Make api call
     const response = await api.post('/login', {
       email,
       password,
     })
 
     return response.data // Returns the data (message and token)
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error:', error)
     throw error // Throw error
+  }
+}
+
+export const ListsFetchAllFromApi = async () => {
+  try {
+    const token = localStorage.getItem('token') // Get token from storage
+    const response = await api.get('/lists', {
+      // Pass URL and config
+      headers: {
+        Authorization: `Bearer ${token}`, // Attach token
+      },
+    })
+    return response.data // Return the array of lists
+  } catch (error) {
+    console.error('Error:', error)
+    throw error // Throw the error so it can be caught in useEffect
   }
 }
 
