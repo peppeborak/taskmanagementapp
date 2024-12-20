@@ -55,7 +55,19 @@ const darkTheme = createTheme({
       lg: 1280,
       xl: 1920,
     },
-  },
+  },components: {
+    MuiListItem: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            backgroundColor: '#1976d2', // Custom hover background
+            color: 'white', // Custom text color
+            transition: 'all 0.3s ease', // Smooth transition
+          }
+        }
+      }
+    }
+  }
 })
 
 export { lightTheme, darkTheme }
