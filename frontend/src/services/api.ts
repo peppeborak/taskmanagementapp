@@ -42,6 +42,7 @@ export const listsFetchAllFromApi = async () => {
         Authorization: `Bearer ${token}`, // Attach token
       },
     })
+    console.log(response.data)
     return response.data // Return the array of lists
   } catch (error) {
     console.error('Error:', error)
