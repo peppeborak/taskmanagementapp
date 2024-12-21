@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { fetchListsFromApi } from '../services/api.ts'
 import { Box, List, ListItem, Typography } from '@mui/material'
 import { ListAddInputField } from './ListAddInputField.tsx'
+import { DeleteListButton } from './DeleteListButton.tsx'
 export interface List {
   id: number
   name: string
@@ -51,7 +52,21 @@ export const SideBarList = () => {
             sideBarLists={sideBarLists}
           />
           {sideBarLists.map((list: List) => (
-            <ListItem key={list.id}>{list.name}</ListItem>
+            <ListItem
+              key={list.id}
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <Typography>{list.name}</Typography>
+              <DeleteListButton
+                listId={list.id}
+                setSideBarLists={setSideBarLists}
+                sideBarLists={sideBarLists}
+              />
+            </ListItem>
           ))}
         </List>
       </Box>

@@ -9,6 +9,7 @@ export const Dashboard = () => {
       <CssBaseline />
 
       <SideBarList />
+      
     </ThemeProvider>
   )
 }

@@ -87,4 +87,19 @@ export const createListToApi = async (newListName: string) => {
   }
 }
 
+export const deleteListToApi = async (listId: number) => {
+  try {
+    const token = localStorage.getItem('token') // Get token from storage
+    const response = await api.delete(`/lists/${listId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Attach token
+      },
+    })
+    return response.data // Return response
+  } catch (error) {
+    console.error('Error:', error)
+    throw error // Throw error
+  }
+}
+
 export default api
