@@ -13,7 +13,9 @@ const API_URL = 'http://localhost:3000/api/v1' // API URL
 
 const api = axios.create({
   baseURL: API_URL,
-  headers: { 'Content-Type': 'application/json' },
+  headers: {
+    'Content-Type': 'application/json',
+  },
 })
 
 export const loginPost = async ({
@@ -33,7 +35,7 @@ export const loginPost = async ({
   }
 }
 
-export const listsFetchAllFromApi = async () => {
+export const fetchListsFromApi = async () => {
   try {
     const token = localStorage.getItem('token') // Get token from storage
     const response = await api.get('/lists', {
@@ -50,7 +52,7 @@ export const listsFetchAllFromApi = async () => {
   }
 }
 
-export const tasksFetchAllFromApi = async (listId: number) => {
+export const fetchTasksFromApi = async (listId: number) => {
   try {
     const token = localStorage.getItem('token') // Get token from storage
     const response = await api.get(`/lists/${listId}`, {
@@ -62,7 +64,26 @@ export const tasksFetchAllFromApi = async (listId: number) => {
     return response.data // Return the array of tasks
   } catch (error) {
     console.error('Error:', error)
-    throw error // Throw the error so it can be caught in useEffect
+    throw error // Throw error
+  }
+}
+
+export const createListToApi = async (newListName: string) => {
+  try {
+    const token = localStorage.getItem('token') // Get token from storage
+    const response = await api.post(
+      `/lists`,
+      { listName: newListName },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Attach token
+        },
+      }
+    )
+    return response.data // Return the array of tasks
+  } catch (error) {
+    console.error('Error:', error)
+    throw error // Throw error
   }
 }
 

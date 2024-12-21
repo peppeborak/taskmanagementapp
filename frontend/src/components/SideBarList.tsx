@@ -1,36 +1,21 @@
 import { useEffect, useState } from 'react'
-import { listsFetchAllFromApi, tasksFetchAllFromApi } from '../services/api.ts'
-import { Box, List, ListItem, ListItemText, Typography } from '@mui/material'
-interface List {
+import { fetchListsFromApi } from '../services/api.ts'
+import { Box, List, ListItem, Typography } from '@mui/material'
+import { ListAddInputField } from './ListAddInputField.tsx'
+export interface List {
   id: number
   name: string
   isDeleted: number
   userId: number
-}
-
-interface Task {
-  id: number
-  userId: number
-  listId: number
-  title: string
-  description?: null | string
-  dueDate?: null | string
-  isDeleted: number
-}
-
-interface OpenedList {
-  listId: number
-  name: string
-  tasks: Task[]
 }
 
 export const SideBarList = () => {
-  const [sideBarLists, setSideBarLists] = useState([])
+  const [sideBarLists, setSideBarLists] = useState<List[]>([])
 
   useEffect(() => {
     const handleSideBarLoad = async () => {
       try {
-        const data = await listsFetchAllFromApi()
+        const data = await fetchListsFromApi()
         setSideBarLists(data.result)
       } catch (error) {
         console.error('Error loading sidebar', error)
@@ -48,7 +33,7 @@ export const SideBarList = () => {
         height: '100vh',
         borderRight: '1px solid rgba(0,0,0, 0,12',
         overflowY: 'auto',
-        flexDirection: 'column'
+        flexDirection: 'column',
       }}
     >
       <Box
@@ -61,6 +46,10 @@ export const SideBarList = () => {
       </Box>
       <Box>
         <List>
+          <ListAddInputField
+            setSideBarLists={setSideBarLists}
+            sideBarLists={sideBarLists}
+          />
           {sideBarLists.map((list: List) => (
             <ListItem key={list.id}>{list.name}</ListItem>
           ))}

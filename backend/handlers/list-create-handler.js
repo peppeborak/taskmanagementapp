@@ -21,7 +21,7 @@ export const listCreateHandler = async (req, res) => {
     // Respond with the list
     return res.status(201).json({
       message: 'Successfully created list',
-      list: { id: listId, userId, name: listName },
+      list: { id: listId, userId: userId, name: listName },
     })
   } catch (err) {
     console.error(err)
