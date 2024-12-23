@@ -75,6 +75,9 @@ export const LoginCard = ({ setIsDarkMode, isDarkMode }: Props) => {
               variant="outlined"
               value={email}
               onChange={handleEmailTextfieldChange}
+              slotProps={{
+                htmlInput: {autoComplete: 'off',},
+              }}
               fullWidth /* Make the TextField take up the full width of the parent container (Box) */
             />
             <TextField
@@ -83,7 +86,9 @@ export const LoginCard = ({ setIsDarkMode, isDarkMode }: Props) => {
               type="password"
               value={password} // Bind the value of the input to the password state so that they are always in sync
               onChange={handlePasswordTextfieldChange} // Call function on change (When typing)
-              autoComplete="current-password"
+              slotProps={{
+                htmlInput: {autoComplete: 'off',},
+              }}
               variant="outlined"
               fullWidth
             />

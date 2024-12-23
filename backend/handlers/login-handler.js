@@ -21,13 +21,13 @@ export const loginHandler = async (req, res) => {
 
     // Check if user exists
     if (!user) {
-      return res.status(404).json({ message: 'User not found.' })
+      return res.status(404).json({ message: 'User not found' })
     }
 
     // Compare passwords
     const passwordMatch = await bcrypt.compare(password, user.passwordHash)
     if (!passwordMatch) {
-      return res.status(401).json({ message: 'Invalid email or password.' })
+      return res.status(401).json({ message: 'Invalid password' })
     }
 
     // Generate JWT
@@ -39,6 +39,6 @@ export const loginHandler = async (req, res) => {
     return res.status(200).json({ message: 'Login successful!', email: user.email, token })
   } catch (err) {
     console.error(err)
-    return res.status(500).json({ message: 'An error occurred during login.' })
+    return res.status(500).json({ message: 'An error occurred during login' })
   }
 }

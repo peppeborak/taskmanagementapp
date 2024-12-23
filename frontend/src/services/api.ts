@@ -44,7 +44,6 @@ export const fetchListsFromApi = async () => {
         Authorization: `Bearer ${token}`, // Attach token
       },
     })
-    console.log(response.data)
     return response.data // Return the array of lists
   } catch (error) {
     console.error('Error:', error)
@@ -52,10 +51,10 @@ export const fetchListsFromApi = async () => {
   }
 }
 
-export const fetchTasksFromApi = async (listId: number) => {
+export const fetchTasksFromApi = async () => {
   try {
     const token = localStorage.getItem('token') // Get token from storage
-    const response = await api.get(`/lists/${listId}`, {
+    const response = await api.get(`/tasks/`, {
       // Pass URL and config
       headers: {
         Authorization: `Bearer ${token}`, // Attach token

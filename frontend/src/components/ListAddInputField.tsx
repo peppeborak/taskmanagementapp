@@ -53,6 +53,9 @@ export const ListAddInputField = ({ setSideBarLists, sideBarLists }: Props) => {
       label="Add new list"
       onChange={handleChange}
       value={newListName}
+      slotProps={{
+        htmlInput: {autoComplete: 'off',},
+      }}
     />
   )
 }
