@@ -1,18 +1,23 @@
-import { Button } from '@mui/material'
+import { IconButton } from '@mui/material'
 import { List } from './SideBarList'
 import { deleteListToApi } from '../services/api'
 import DeleteIcon from '@mui/icons-material/Delete'
+import { selectedList } from '../pages/Dashboard.tsx'
 
 interface DeleteButtonProps {
   setSideBarLists: React.Dispatch<React.SetStateAction<List[]>>
   sideBarLists: List[]
   listId: number
+  selectedLists: selectedList[]
+  setSelectedLists: React.Dispatch<React.SetStateAction<selectedList[]>>
 }
 
 export const DeleteListButton = ({
   setSideBarLists,
   sideBarLists,
   listId,
+  setSelectedLists,
+  selectedLists,
 }: DeleteButtonProps) => {
   const handleButtonClick = async () => {
     try {
@@ -21,9 +26,14 @@ export const DeleteListButton = ({
         // If not successful
         throw new Error('Unexpected API response') // Throw error
       }
-      // Filter out the deleted list
+      // Filter out the deleted list from sidebar
       const newSideBarList = sideBarLists.filter((list) => list.id !== listId)
       setSideBarLists(newSideBarList) // Set new sidebar list
+
+      const newSelectedList = selectedLists.filter(
+        (list) => list.listId !== listId
+      )
+      setSelectedLists(newSelectedList)
     } catch (error) {
       console.error('Error deleting list', error)
       throw error
@@ -31,8 +41,8 @@ export const DeleteListButton = ({
   }
 
   return (
-    <Button onClick={handleButtonClick}>
-      <DeleteIcon />
-    </Button>
+    <IconButton size="small" onClick={handleButtonClick}>
+      <DeleteIcon fontSize="inherit" />
+    </IconButton>
   )
 }

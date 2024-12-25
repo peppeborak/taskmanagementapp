@@ -2,6 +2,8 @@ import { Box, Divider, List, ListItem, Paper, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { selectedList } from '../pages/Dashboard'
 import { fetchTasksFromApi } from '../services/api'
+import { MinimizeTaskListButton } from './MinimizeTaskListButton'
+import { AddTaskButton } from './AddTaskButton'
 
 interface Task {
   id: number
@@ -14,11 +16,16 @@ interface Task {
 }
 interface TasksListProps {
   selectedLists: selectedList[]
+  setSelectedLists: React.Dispatch<React.SetStateAction<selectedList[]>>
 }
 
-export const TasksList = ({ selectedLists }: TasksListProps) => {
+export const TasksList = ({
+  selectedLists,
+  setSelectedLists,
+}: TasksListProps) => {
   const [allTasks, setAllTasks] = useState<Task[]>([])
 
+  // Load all tasks on load
   useEffect(() => {
     const fetchAllTasks = async () => {
       try {
@@ -40,6 +47,7 @@ export const TasksList = ({ selectedLists }: TasksListProps) => {
         justifyContent: 'flex-start',
       }}
     >
+      {/* Map all selected lists */}
       {selectedLists.map((list: selectedList) => (
         <Paper
           key={list.listId}
@@ -49,12 +57,31 @@ export const TasksList = ({ selectedLists }: TasksListProps) => {
             width: 250,
           }}
         >
-          <Typography variant="h6" align="left" sx={{ mt: 2, ml: 2 }}>
-            {list.listName}
-          </Typography>
+          {/* Box for title and buttons*/}
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Typography variant="h6" align="left" sx={{ mt: 2, ml: 2 }}>
+              {list.listName}
+            </Typography>
+            {/* Box for buttons */}
+            <Box sx={{ display: 'flex', mt: 1 }}>
+              <MinimizeTaskListButton
+                selectedLists={selectedLists}
+                setSelectedLists={setSelectedLists}
+                listId={list.listId}
+              />
+              <AddTaskButton />
+            </Box>
+          </Box>
+          {/* Map all tasks in selectedList */}
           <List key={list.listId}>
             {allTasks
-              .filter((task) => task.listId === list.listId && task.isDeleted === 0)
+              .filter(
+                (task) => task.listId === list.listId && task.isDeleted === 0
+              )
               .map((task: Task) => (
                 <React.Fragment key={task.id}>
                   <ListItem key={task.id}>

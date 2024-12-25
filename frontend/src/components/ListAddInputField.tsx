@@ -10,9 +10,10 @@ interface Props {
 export const ListAddInputField = ({ setSideBarLists, sideBarLists }: Props) => {
   const [newListName, setNewListName] = useState<string>('')
 
+
   const handleAddNewList = async () => {
+    // Validates that new list is not blank
     if (!newListName.trim()) {
-      // If field is empty
       return // Do nothing
     }
     try {

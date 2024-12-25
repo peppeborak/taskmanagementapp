@@ -30,8 +30,11 @@ export const Dashboard = () => {
         </Grid2>
 
         {/* Main Content */}
-        <Grid2 size={9} sx={{ mt: 4 }} /* margintop value 4(32px)*/>
-          <TasksList selectedLists={selectedLists} />
+        <Grid2 size={9} sx={{ mt: 4 }}>
+          <TasksList
+            selectedLists={selectedLists}
+            setSelectedLists={setSelectedLists}
+          />
         </Grid2>
       </Grid2>
     </ThemeProvider>

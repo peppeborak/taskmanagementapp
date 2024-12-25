@@ -33,11 +33,10 @@ export const SideBarList = ({
   }
 
   const handleSideBarClick = (listId: number, listName: string) => {
-
-      // Check if clicked list is already in selectedLists (Showing)
-      if (selectedLists.some((list) => list.listId === listId)){
-        return // Do nothing (avoid duplicates)
-      }
+    // Check if clicked list is already in selectedLists (Showing)
+    if (selectedLists.some((list) => list.listId === listId)) {
+      return // Do nothing (avoid duplicates)
+    }
     const selectedList = {
       listId: listId,
       listName: listName,
@@ -106,6 +105,8 @@ export const SideBarList = ({
                   listId={list.id}
                   setSideBarLists={setSideBarLists}
                   sideBarLists={sideBarLists}
+                  selectedLists={selectedLists}
+                  setSelectedLists={setSelectedLists}
                 />
               </ListItem>
               <Divider component="li" />
