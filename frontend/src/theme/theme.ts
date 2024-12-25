@@ -1,29 +1,29 @@
 import { createTheme } from '@mui/material/styles'
 
+
 const lightTheme = createTheme({
   palette: {
     mode: 'light',
-    primary: {
-      main: '#1976d2', // Primary color (blue)
+    background: {
+      default: '#B2967D', // Darker background (brown)
+      paper: '#E7D8C9', // Slightly lighter for cards (beige)
     },
-    secondary: {
-      main: '#ff4081', // Secondary color (pink)
-    },
-  },
-  typography: {
-    fontFamily: 'Roboto, sans-serif',
-    h5: {
-      fontWeight: 700, // Custom style for h5 headings
+    divider: '#000000', // Black for borders and dividers
+    text: {
+      primary: '#000000', // black text
+      secondary: 'rgba(0, 0, 0, 0.7)', // Muted text (black)
     },
   },
-  spacing: 4, // Global spacing scale for padding/margin
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 960,
-      lg: 1280,
-      xl: 1920,
+  components: {
+    MuiListItem: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            backgroundColor: '#EEE4E1', // Custom hover background
+            transition: 'all 0.3s ease', // Smooth transition
+          },
+        },
+      },
     },
   },
 })
@@ -32,42 +32,27 @@ const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     background: {
-      default: '#1e1e1e', // Dark background (a softer black)
-      paper: '#292929', // Lighter dark for cards and surfaces
+      default: '#121212', // Dark background
+      paper: '#1e1e1e', // Slightly lighter for cards
     },
+    divider: 'rgba(255, 255, 255, 0.12)', // Subtle gray for borders and dividers
     text: {
-      primary: '#e0e0e0', // Lighter text for better contrast on dark backgrounds
-      secondary: '#a0a0a0', // Slightly less emphasized secondary text
-    },
-    primary: {
-      main: '#e3f2fd', // Primary accent color (ChatGPT greenish)
-    },
-    secondary: {
-      main: '#f44336', // Secondary accent color (red for highlights or buttons)
+      primary: '#ffffff', // Bright white text
+      secondary: 'rgba(255, 255, 255, 0.7)', // Muted text
     },
   },
-  spacing: 4, // Global spacing scale for padding/margin
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 960,
-      lg: 1280,
-      xl: 1920,
-    },
-  },components: {
+  components: {
     MuiListItem: {
       styleOverrides: {
         root: {
           '&:hover': {
             backgroundColor: '#1976d2', // Custom hover background
-            color: 'white', // Custom text color
             transition: 'all 0.3s ease', // Smooth transition
-          }
-        }
-      }
-    }
-  }
+          },
+        },
+      },
+    },
+  },
 })
 
 export { lightTheme, darkTheme }
