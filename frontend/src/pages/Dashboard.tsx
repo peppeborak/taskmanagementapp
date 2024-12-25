@@ -1,9 +1,10 @@
 import { ThemeProvider } from '@emotion/react'
-import { darkTheme, lightTheme } from '../theme/theme'
+import { darkTheme } from '../theme/theme'
 import { CssBaseline, Grid2 } from '@mui/material'
 import { SideBarList } from '../components/SideBarList'
 import { useState } from 'react'
 import { TasksList } from '../components/TasksList'
+import { NavBar } from '../components/NavBar'
 
 export interface selectedList {
   listId: number
@@ -16,6 +17,9 @@ export const Dashboard = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
+      {/* NavBar */}
+      <NavBar />
+
       <Grid2 container>
         {/* SideBar List */}
         <Grid2 size={3} sx={{ height: '100%' }}>

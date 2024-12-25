@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { fetchListsFromApi } from '../services/api.ts'
-import {
-  Box,
-  List,
-  ListItem,
-  Typography,
-  Paper,
-} from '@mui/material'
+import { Box, List, ListItem, Typography, Paper } from '@mui/material'
 import { ListAddInputField } from './ListAddInputField.tsx'
 import { DeleteListButton } from './DeleteListButton.tsx'
 import { selectedList } from '../pages/Dashboard.tsx'
@@ -64,16 +58,9 @@ export const SideBarList = ({
         overflowY: 'auto',
         display: 'flex',
         flexDirection: 'column',
+        borderRadius: 0, // Remove round edges
       }}
     >
-      <Box
-        sx={{
-          textAlign: 'left', // Center text horizontally
-          padding: 2, // Add padding around the text
-        }}
-      >
-        <Typography variant="h5">Your lists</Typography>
-      </Box>
       <Box>
         <List>
           <ListAddInputField
@@ -96,7 +83,7 @@ export const SideBarList = ({
                     width: '100%',
                     textAlign: 'left',
                     padding: 1,
-                    cursor: 'pointer'
+                    cursor: 'pointer',
                   }}
                   onClick={() => handleSideBarClick(list.id, list.name)}
                 >
