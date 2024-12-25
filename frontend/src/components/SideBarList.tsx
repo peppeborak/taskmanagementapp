@@ -33,7 +33,11 @@ export const SideBarList = ({
   }
 
   const handleSideBarClick = (listId: number, listName: string) => {
-    // Add if list.id === some id in list else do nothing
+
+      // Check if clicked list is already in selectedLists (Showing)
+      if (selectedLists.some((list) => list.listId === listId)){
+        return // Do nothing (avoid duplicates)
+      }
     const selectedList = {
       listId: listId,
       listName: listName,
@@ -41,7 +45,7 @@ export const SideBarList = ({
 
     const newSelectedListIds = [selectedList, ...selectedLists]
     setSelectedLists(newSelectedListIds)
-    console.log('Selected lists: ', selectedLists)
+    console.log('Selected lists: ', newSelectedListIds)
   }
 
   useEffect(() => {
