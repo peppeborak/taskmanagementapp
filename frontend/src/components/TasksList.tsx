@@ -1,11 +1,5 @@
-import {
-  Box,
-  List,
-  ListItem,
-  Paper,
-  Typography,
-} from '@mui/material'
-import { useEffect, useState } from 'react'
+import { Box, Divider, List, ListItem, Paper, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import { selectedList } from '../pages/Dashboard'
 import { fetchTasksFromApi } from '../services/api'
 
@@ -55,16 +49,19 @@ export const TasksList = ({ selectedLists }: TasksListProps) => {
             width: 250,
           }}
         >
-          <Typography variant="h6" align="center">
+          <Typography variant="h6" align="left" sx={{ mt: 2, ml: 2 }}>
             {list.listName}
           </Typography>
           <List key={list.listId}>
             {allTasks
               .filter((task) => task.listId === list.listId)
               .map((task: Task) => (
-                <ListItem key={task.id}>
-                  <Typography>{task.title}</Typography>
-                </ListItem>
+                <React.Fragment key={task.id}>
+                  <ListItem key={task.id}>
+                    <Typography>{task.title}</Typography>
+                  </ListItem>
+                  <Divider component="li" />
+                </React.Fragment>
               ))}
           </List>
         </Paper>
