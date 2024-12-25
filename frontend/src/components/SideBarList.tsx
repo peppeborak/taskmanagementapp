@@ -80,6 +80,7 @@ export const SideBarList = ({
             setSideBarLists={setSideBarLists}
             sideBarLists={sideBarLists}
           />
+          <Divider component="li" />
           {sideBarLists.map((list: List) => (
             <React.Fragment key={list.id}>
               <ListItem

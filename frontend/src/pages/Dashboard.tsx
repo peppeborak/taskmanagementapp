@@ -18,7 +18,7 @@ export const Dashboard = () => {
       <CssBaseline />
       <Grid2 container>
         {/* SideBar List */}
-        <Grid2 size={3} sx={{height: '100%'}}>
+        <Grid2 size={3} sx={{ height: '100%' }}>
           <SideBarList
             selectedLists={selectedLists}
             setSelectedLists={setSelectedLists}
@@ -26,7 +26,7 @@ export const Dashboard = () => {
         </Grid2>
 
         {/* Main Content */}
-        <Grid2 size={9}>
+        <Grid2 size={9} sx={{ mt: 4 }} /* margintop value 4(32px)*/>
           <TasksList selectedLists={selectedLists} />
         </Grid2>
       </Grid2>
