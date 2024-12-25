@@ -5,8 +5,9 @@ import { fetchTasksFromApi } from '../services/api'
 import { MinimizeTaskListButton } from './MinimizeTaskListButton'
 import { AddTaskButton } from './AddTaskButton'
 import { DeleteTaskButton } from './DeleteTaskButton'
+import { AddTaskInputField } from './AddTaskInputField'
 
-interface Task {
+export interface Task {
   id: number
   userId: number
   listId: number
@@ -25,6 +26,10 @@ export const TasksList = ({
   setSelectedLists,
 }: TasksListProps) => {
   const [allTasks, setAllTasks] = useState<Task[]>([])
+  const [activeTextFieldListId, setActiveTextFieldListId] = useState<
+    number | null
+  >(null)
+  const [newTaskTitle, setNewTaskTitle] = useState<string>('')
 
   // Load all tasks on load
   useEffect(() => {
@@ -38,6 +43,11 @@ export const TasksList = ({
     }
     fetchAllTasks()
   }, [])
+
+  // Handle InputFieldvisible
+  const showTaskInputForList = (listId: number) => {
+    setActiveTextFieldListId(listId)
+  }
 
   return (
     <Box
@@ -58,7 +68,7 @@ export const TasksList = ({
             width: 250,
           }}
         >
-          {/* Box for title and buttons*/}
+          {/* Top Box for title and buttons*/}
           <Box
             display="flex"
             justifyContent="space-between"
@@ -74,26 +84,41 @@ export const TasksList = ({
                 setSelectedLists={setSelectedLists}
                 listId={list.listId}
               />
-              <AddTaskButton />
+              <AddTaskButton
+                listId={list.listId}
+                showTaskInputForList={showTaskInputForList}
+              />
             </Box>
           </Box>
-          <Divider sx={{mt: 1}}/>
+          <Divider sx={{ mt: 1 }} />
           {/* Map all tasks in selectedList */}
           <List key={list.listId}>
+            {/* Add Task input field */}
+            {activeTextFieldListId === list.listId && (
+              <AddTaskInputField
+                listId={list.listId}
+                allTasks={allTasks}
+                setAllTasks={setAllTasks}
+                newTaskTitle={newTaskTitle}
+                setNewTaskTitle={setNewTaskTitle}
+                setActiveTextFieldListId={setActiveTextFieldListId}
+              />
+            )}
             {allTasks
               .filter(
                 (task) => task.listId === list.listId && task.isDeleted === 0
               )
               .map((task: Task) => (
-                <Box key={task.id}
-                display='flex'
-                justifyContent='space-between'
-                alignItems='center'
+                <Box
+                  key={task.id}
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
                 >
                   <ListItem key={task.id}>
                     <Typography>{task.title}</Typography>
                   </ListItem>
-                    <DeleteTaskButton />
+                  <DeleteTaskButton />
                   <Divider component="li" />
                 </Box>
               ))}

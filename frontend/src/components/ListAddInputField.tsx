@@ -25,7 +25,7 @@ export const ListAddInputField = ({ setSideBarLists, sideBarLists }: Props) => {
         isDeleted: 0,
         userId: result.list.userId,
       }
-      const updatedSideBarLists = [newList, ...sideBarLists] // Old array + the new list
+      const updatedSideBarLists = [newList, ...sideBarLists] // Old array + new list
       setSideBarLists(updatedSideBarLists)
       setNewListName('') // Clear input field
     } catch (error) {

@@ -19,7 +19,7 @@ export const taskCreateHandler = async (req, res) => {
     // Respond with the task id and task name
     return res.status(201).json({
       message: 'Successfully created task',
-      task: { taskId: taskId, name: taskTitle },
+      task: { userId: userId, taskId: taskId, name: taskTitle },
     })  
   } catch (err) {
     console.error(err)

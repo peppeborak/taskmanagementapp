@@ -9,8 +9,10 @@ interface LoginResponse {
   token: string
 }
 
-const API_URL = 'http://localhost:3000/api/v1' // API URL
+// API URL for backend requests
+const API_URL = 'http://localhost:3000/api/v1'
 
+// Create axios instance with basic configuration
 const api = axios.create({
   baseURL: API_URL,
   headers: {
@@ -18,6 +20,7 @@ const api = axios.create({
   },
 })
 
+// Login API requests
 export const loginPost = async ({
   email,
   password,
@@ -27,19 +30,18 @@ export const loginPost = async ({
       email,
       password,
     })
-
     return response.data // Returns the data (message and token)
   } catch (error) {
     console.error('Error:', error)
-    throw error // Throw error
+    throw error
   }
 }
 
+// Lists API requests
 export const fetchListsFromApi = async () => {
   try {
     const token = localStorage.getItem('token') // Get token from storage
     const response = await api.get('/lists', {
-      // Pass URL and config
       headers: {
         Authorization: `Bearer ${token}`, // Attach token
       },
@@ -47,23 +49,7 @@ export const fetchListsFromApi = async () => {
     return response.data // Return the array of lists
   } catch (error) {
     console.error('Error:', error)
-    throw error // Throw the error so it can be caught in useEffect
-  }
-}
-
-export const fetchTasksFromApi = async () => {
-  try {
-    const token = localStorage.getItem('token') // Get token from storage
-    const response = await api.get(`/tasks/`, {
-      // Pass URL and config
-      headers: {
-        Authorization: `Bearer ${token}`, // Attach token
-      },
-    })
-    return response.data // Return the array of tasks
-  } catch (error) {
-    console.error('Error:', error)
-    throw error // Throw error
+    throw error
   }
 }
 
@@ -97,7 +83,45 @@ export const deleteListToApi = async (listId: number) => {
     return response.data // Return response
   } catch (error) {
     console.error('Error:', error)
-    throw error // Throw error
+    throw error
+  }
+}
+
+// Tasks API request
+export const fetchTasksFromApi = async () => {
+  try {
+    const token = localStorage.getItem('token') // Get token from storage
+    const response = await api.get(`/tasks/`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Attach token
+      },
+    })
+    return response.data // Return the array of tasks
+  } catch (error) {
+    console.error('Error:', error)
+    throw error
+  }
+}
+
+export const createTaskToApi = async (listId: number, newTaskTitle: string) => {
+  try {
+    const token = localStorage.getItem('token') // Get token from storage
+    const response = await api.post(
+      `/tasks`,
+      {
+        listId: listId,
+        taskTitle: newTaskTitle,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Attach token
+        },
+      }
+    )
+    return response.data // Return the response
+  } catch (error) {
+    console.error('Error:', error)
+    throw error
   }
 }
 
