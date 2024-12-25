@@ -54,7 +54,7 @@ export const TasksList = ({ selectedLists }: TasksListProps) => {
           </Typography>
           <List key={list.listId}>
             {allTasks
-              .filter((task) => task.listId === list.listId)
+              .filter((task) => task.listId === list.listId && task.isDeleted === 0)
               .map((task: Task) => (
                 <React.Fragment key={task.id}>
                   <ListItem key={task.id}>
