@@ -1,6 +1,6 @@
 import { IconButton } from '@mui/material'
 import { selectedList } from '../pages/Dashboard'
-import MinimizeIcon from '@mui/icons-material/Minimize'
+import RemoveIcon from '@mui/icons-material/Remove';
 
 interface Props {
   selectedLists: selectedList[]
@@ -24,7 +24,7 @@ export const MinimizeTaskListButton = ({
 
   return (
     <IconButton size="small" onClick={handleOnClick}>
-      <MinimizeIcon />
+      <RemoveIcon />
     </IconButton>
   )
 }

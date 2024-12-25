@@ -4,6 +4,7 @@ import { selectedList } from '../pages/Dashboard'
 import { fetchTasksFromApi } from '../services/api'
 import { MinimizeTaskListButton } from './MinimizeTaskListButton'
 import { AddTaskButton } from './AddTaskButton'
+import { DeleteTaskButton } from './DeleteTaskButton'
 
 interface Task {
   id: number
@@ -76,6 +77,7 @@ export const TasksList = ({
               <AddTaskButton />
             </Box>
           </Box>
+          <Divider sx={{mt: 1}}/>
           {/* Map all tasks in selectedList */}
           <List key={list.listId}>
             {allTasks
@@ -83,12 +85,17 @@ export const TasksList = ({
                 (task) => task.listId === list.listId && task.isDeleted === 0
               )
               .map((task: Task) => (
-                <React.Fragment key={task.id}>
+                <Box key={task.id}
+                display='flex'
+                justifyContent='space-between'
+                alignItems='center'
+                >
                   <ListItem key={task.id}>
                     <Typography>{task.title}</Typography>
                   </ListItem>
+                    <DeleteTaskButton />
                   <Divider component="li" />
-                </React.Fragment>
+                </Box>
               ))}
           </List>
         </Paper>
