@@ -19,7 +19,7 @@ export const DeleteListButton = ({
   setSelectedLists,
   selectedLists,
 }: DeleteButtonProps) => {
-  const handleButtonClick = async () => {
+  const handleDeleteList = async () => {
     try {
       const response = await deleteListToApi(listId) // Send delete request to api
       if (response.message !== 'Successfully deleted list') {
@@ -41,7 +41,7 @@ export const DeleteListButton = ({
   }
 
   return (
-    <IconButton size="small" onClick={handleButtonClick}>
+    <IconButton size="small" onClick={handleDeleteList}>
       <DeleteIcon fontSize="inherit" />
     </IconButton>
   )

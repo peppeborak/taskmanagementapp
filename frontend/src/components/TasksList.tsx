@@ -104,6 +104,7 @@ export const TasksList = ({
                 setActiveTextFieldListId={setActiveTextFieldListId}
               />
             )}
+            {/* Map all tasks with listId */}
             {allTasks
               .filter(
                 (task) => task.listId === list.listId && task.isDeleted === 0
@@ -115,11 +116,17 @@ export const TasksList = ({
                   justifyContent="space-between"
                   alignItems="center"
                 >
-                  <ListItem key={task.id}>
+                  <ListItem>
+                    {/* Task Title */}
                     <Typography>{task.title}</Typography>
+                    {/* Delete Button */}
                   </ListItem>
-                  <DeleteTaskButton />
                   <Divider component="li" />
+                    <DeleteTaskButton
+                      taskId={task.id}
+                      allTasks={allTasks}
+                      setAllTasks={setAllTasks}
+                    />
                 </Box>
               ))}
           </List>

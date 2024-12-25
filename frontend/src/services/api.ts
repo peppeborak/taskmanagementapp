@@ -125,4 +125,19 @@ export const createTaskToApi = async (listId: number, newTaskTitle: string) => {
   }
 }
 
+export const deleteTaskToApi = async (taskId: number) => {
+  try {
+    const token = localStorage.getItem('token') // Get token from storage
+    const response = await api.delete(`/tasks/${taskId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Attach token
+      },
+    })
+    return response.data // Return response
+  } catch (error) {
+    console.error('Error:', error)
+    throw error
+  }
+}
+
 export default api
