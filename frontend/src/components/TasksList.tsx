@@ -1,4 +1,10 @@
-import { Box, List, ListItem, ListItemText, Typography } from '@mui/material'
+import {
+  Box,
+  List,
+  ListItem,
+  Paper,
+  Typography,
+} from '@mui/material'
 import { useEffect, useState } from 'react'
 import { selectedList } from '../pages/Dashboard'
 import { fetchTasksFromApi } from '../services/api'
@@ -27,45 +33,42 @@ export const TasksList = ({ selectedLists }: TasksListProps) => {
       } catch (error) {
         console.error('Error loading tasks', error)
       }
-
     }
     fetchAllTasks()
   }, [])
 
   return (
-    <>
+    <Box
+      sx={{
+        display: 'flex',
+        flexWrap: 'wrap', // Allow items to wrap to the next row
+        gap: 2,
+        justifyContent: 'flex-start',
+      }}
+    >
       {selectedLists.map((list: selectedList) => (
-        <Box
-        key={list.listId}
+        <Paper
+          key={list.listId}
+          elevation={3}
           sx={{
-            padding: 2,
-            border: '1px solid black',
-            marginBottom: 2,
-            height: [250, 300],
-            width: [150, 200],
+            height: 350,
+            width: 250,
           }}
         >
-            <Typography variant='h6' align='center' >{list.listName}</Typography>
-            <List key={list.listId}>
-              {allTasks
-                .filter((task) => task.listId === list.listId)
-                .map((task: Task) => (
-                  <ListItem key={task.id}>
-                    <Typography>{task.title}</Typography>
-                  </ListItem>
-                ))}
-            </List>
-          </Box>
+          <Typography variant="h6" align="center">
+            {list.listName}
+          </Typography>
+          <List key={list.listId}>
+            {allTasks
+              .filter((task) => task.listId === list.listId)
+              .map((task: Task) => (
+                <ListItem key={task.id}>
+                  <Typography>{task.title}</Typography>
+                </ListItem>
+              ))}
+          </List>
+        </Paper>
       ))}
-    </>
+    </Box>
   )
 }
-
-/*          {selectedLists.map((list: selectedList) => (
-      <List key={list.listId} sx={{ marginBottom: 2 }}>
-        <ListItem>
-        <ListItemText primary={list.listName} />
-        </ListItem>
-      </List>
-    ))}
-      */
