@@ -1,9 +1,17 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { fetchListsFromApi } from '../services/api.ts'
-import { Box, ButtonBase, List, ListItem, Typography } from '@mui/material'
+import {
+  Box,
+  List,
+  ListItem,
+  Typography,
+  Paper,
+} from '@mui/material'
 import { ListAddInputField } from './ListAddInputField.tsx'
 import { DeleteListButton } from './DeleteListButton.tsx'
 import { selectedList } from '../pages/Dashboard.tsx'
+import Divider from '@mui/material/Divider'
+
 export interface List {
   id: number
   name: string
@@ -31,7 +39,7 @@ export const SideBarList = ({
   }
 
   const handleSideBarClick = (listId: number, listName: string) => {
-    // Add if list.id === some id in list, do nothing
+    // Add if list.id === some id in list else do nothing
     const selectedList = {
       listId: listId,
       listName: listName,
@@ -48,17 +56,19 @@ export const SideBarList = ({
 
   return (
     <Box
+      component={Paper}
+      elevation={3}
       sx={{
         width: '20vw',
         height: '100vh',
-        borderRight: '1px solid rgba(0,0,0,0.12)',
         overflowY: 'auto',
+        display: 'flex',
         flexDirection: 'column',
       }}
     >
       <Box
         sx={{
-          textAlign: 'center', // Center text horizontally
+          textAlign: 'left', // Center text horizontally
           padding: 2, // Add padding around the text
         }}
       >
@@ -71,29 +81,43 @@ export const SideBarList = ({
             sideBarLists={sideBarLists}
           />
           {sideBarLists.map((list: List) => (
-            <ListItem
-              key={list.id}
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <ButtonBase
+            <React.Fragment key={list.id}>
+              <ListItem
+                key={list.id}
                 sx={{
-                  width: '100%',
-                  textAlign: 'left',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
                 }}
-                onClick={() => handleSideBarClick(list.id, list.name)}
               >
-                <Typography>{list.name}</Typography>
-              </ButtonBase>
-              <DeleteListButton
-                listId={list.id}
-                setSideBarLists={setSideBarLists}
-                sideBarLists={sideBarLists}
-              />
-            </ListItem>
+                <Box
+                  sx={{
+                    width: '100%',
+                    textAlign: 'left',
+                    padding: 1,
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => handleSideBarClick(list.id, list.name)}
+                >
+                  <Typography
+                    sx={{
+                      textAlign: 'left',
+                      overflow: 'hidden',
+                      whiteSpace: 'nowrap',
+                      textOverflow: 'ellipsis',
+                    }}
+                  >
+                    {list.name}
+                  </Typography>
+                </Box>
+                <DeleteListButton
+                  listId={list.id}
+                  setSideBarLists={setSideBarLists}
+                  sideBarLists={sideBarLists}
+                />
+              </ListItem>
+              <Divider component="li" />
+            </React.Fragment>
           ))}
         </List>
       </Box>
