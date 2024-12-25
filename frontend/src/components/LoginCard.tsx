@@ -19,6 +19,8 @@ type Props = {
 export const LoginCard = ({ setIsDarkMode, isDarkMode }: Props) => {
   const [password, setPassword] = useState('') // Store user entered password
   const [email, setEmail] = useState('') // Store user entered password
+  const isEmailValid = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
   const navigate = useNavigate()
 
   // Handle Login request
@@ -34,7 +36,7 @@ export const LoginCard = ({ setIsDarkMode, isDarkMode }: Props) => {
     }
   }
 
-  // Handle password onChange
+  // Handle email onChange
   const handleEmailTextfieldChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -52,9 +54,9 @@ export const LoginCard = ({ setIsDarkMode, isDarkMode }: Props) => {
     <>
       <Card
         sx={{
-          width: '100%', // Let the card fill the entire available width
-          maxWidth: 400, // Set a maximum width of 400px for the card, so it doesn't stretch too wide
-          padding: 2, // Add padding inside the card to create space around the content
+          width: '100%',
+          maxWidth: 400,
+          padding: 2,
         }}
       >
         <CardContent>
@@ -64,11 +66,12 @@ export const LoginCard = ({ setIsDarkMode, isDarkMode }: Props) => {
 
           <Box
             sx={{
-              display: 'flex', // Use flexbox to layout the content inside the Box
-              flexDirection: 'column', // Stack the items vertically (column direction)
-              gap: 2, // Add a gap between the elements inside the Box (TextFields)
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 2,
             }}
           >
+            {/* Email textfield */}
             <TextField
               id="email"
               label="Email"
@@ -76,10 +79,11 @@ export const LoginCard = ({ setIsDarkMode, isDarkMode }: Props) => {
               value={email}
               onChange={handleEmailTextfieldChange}
               slotProps={{
-                htmlInput: {autoComplete: 'off',},
+                htmlInput: { autoComplete: 'off' },
               }}
               fullWidth /* Make the TextField take up the full width of the parent container (Box) */
             />
+            {/* Password textfield */}
             <TextField
               id="password"
               label="Password"
@@ -87,19 +91,20 @@ export const LoginCard = ({ setIsDarkMode, isDarkMode }: Props) => {
               value={password} // Bind the value of the input to the password state so that they are always in sync
               onChange={handlePasswordTextfieldChange} // Call function on change (When typing)
               slotProps={{
-                htmlInput: {autoComplete: 'off',},
+                htmlInput: { autoComplete: 'off' },
               }}
               variant="outlined"
               fullWidth
             />
           </Box>
         </CardContent>
+        {/* Buttons */}
         <CardActions sx={{ justifyContent: 'center' }}>
           <Button
             variant="contained"
             size="large"
-            onClick={handleLoginButtonOnClick} // Call function on click
-            disabled={password.length === 0} // Disable button if no password is typed
+            onClick={handleLoginButtonOnClick}
+            disabled={!isEmailValid(email) || password.length === 0} // Disable button if email is not valid or password textfield is empty
           >
             Login
           </Button>
