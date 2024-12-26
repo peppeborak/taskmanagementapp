@@ -24,17 +24,14 @@ export const AddTaskInputField = ({
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setNewTaskTitle(event.target.value)
-    console.log(newTaskTitle)
   }
 
   const handleAddTask = async (listId: number) => {
-    console.log('new task Title:', newTaskTitle, 'list id:', listId)
     if (!newTaskTitle.trim()) {
       return // Do nothing
     }
     try {
       const response = await createTaskToApi(listId, newTaskTitle)
-      console.log('Response from api request: ',response)
       const newTask: Task = {
         id: response.task.taskId,
         userId: response.task.userId,
@@ -48,7 +45,6 @@ export const AddTaskInputField = ({
       setAllTasks(updatedTasksList)
       setNewTaskTitle('') // Clear input field
       setActiveTextFieldListId(null)
-      console.log(updatedTasksList)
     } catch (error) {
       console.error('Error creating task', error)
       throw error

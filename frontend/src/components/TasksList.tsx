@@ -66,6 +66,7 @@ export const TasksList = ({
           sx={{
             height: 350,
             width: 250,
+            overflowY: 'auto'
           }}
         >
           {/* Top Box for title and buttons*/}

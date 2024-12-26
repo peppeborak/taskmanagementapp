@@ -44,7 +44,6 @@ export const SideBarList = ({
 
     const newSelectedListIds = [selectedList, ...selectedLists]
     setSelectedLists(newSelectedListIds)
-    console.log('Selected lists: ', newSelectedListIds)
   }
 
   useEffect(() => {
