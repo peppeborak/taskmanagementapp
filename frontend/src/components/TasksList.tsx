@@ -1,4 +1,4 @@
-import { Box, Divider, List, ListItem, Paper, Typography } from '@mui/material'
+import { Box, Divider, List, ListItem, ListItemText, Paper, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { selectedList } from '../pages/Dashboard'
 import { fetchTasksFromApi } from '../services/api'
@@ -116,17 +116,19 @@ export const TasksList = ({
                   justifyContent="space-between"
                   alignItems="center"
                 >
-                  <ListItem>
-                    {/* Task Title */}
-                    <Typography>{task.title}</Typography>
-                    {/* Delete Button */}
-                  </ListItem>
-                  <Divider component="li" />
+                  <ListItem
+                  secondaryAction={
                     <DeleteTaskButton
                       taskId={task.id}
                       allTasks={allTasks}
                       setAllTasks={setAllTasks}
-                    />
+                    />}
+                  >
+                    {/* Task Title */}
+                    <ListItemText>{task.title}</ListItemText>
+                    {/* Delete Button */}
+                  </ListItem>
+                  <Divider component="li" />
                 </Box>
               ))}
           </List>

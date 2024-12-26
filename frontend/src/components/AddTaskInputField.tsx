@@ -33,10 +33,11 @@ export const AddTaskInputField = ({
       return // Do nothing
     }
     try {
-      const result = await createTaskToApi(listId, newTaskTitle)
+      const response = await createTaskToApi(listId, newTaskTitle)
+      console.log('Response from api request: ',response)
       const newTask: Task = {
-        id: result.taskId,
-        userId: result.userId,
+        id: response.task.taskId,
+        userId: response.task.userId,
         listId: listId,
         title: newTaskTitle,
         description: null,
