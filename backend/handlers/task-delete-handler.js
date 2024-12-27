@@ -7,7 +7,7 @@ export const taskDeleteHandler = async (req, res) => {
 
     // Validate userId
     if (!userId || isNaN(userId)) {
-      return res.status(400).json({ message: 'Task id is required' })
+      return res.status(400).json({ message: 'User id is required' })
     }
 
     // Validate taskId
