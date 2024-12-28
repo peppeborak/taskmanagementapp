@@ -1,6 +1,5 @@
 import { createTheme } from '@mui/material/styles'
 
-
 const lightTheme = createTheme({
   palette: {
     mode: 'light',
@@ -15,12 +14,14 @@ const lightTheme = createTheme({
     },
   },
   components: {
-    MuiListItem: {
+    MuiCssBaseline: {
       styleOverrides: {
-        root: {
+        '.hover-box': {
+          backgroundColor: 'rgba(0,0,0,0.05)',
+          borderRadius: '4px',
+          transition: 'background-color 0.3s ease',
           '&:hover': {
-            backgroundColor: '#EEE4E1', // Custom hover background
-            transition: 'all 0.3s ease', // Smooth transition
+            backgroundColor: 'rgba(0,0,0,0.1)', // Hover effect NEED TO change colors
           },
         },
       },
@@ -42,12 +43,14 @@ const darkTheme = createTheme({
     },
   },
   components: {
-    MuiListItem: {
+    MuiCssBaseline: {
       styleOverrides: {
-        root: {
+        '.hover-box': {
+          backgroundColor: 'rgba(0,0,0,0.05)',
+          borderRadius: '4px',
+          transition: 'background-color 0.3s ease',
           '&:hover': {
-            backgroundColor: '#1976d2', // Custom hover background
-            transition: 'all 0.3s ease', // Smooth transition
+            backgroundColor: 'rgba(255,255,255,0.3)', // Hover effect
           },
         },
       },

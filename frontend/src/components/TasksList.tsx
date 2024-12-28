@@ -1,4 +1,10 @@
-import { Box, Divider, List, ListItem, ListItemText, Paper, Typography } from '@mui/material'
+import {
+  Box,
+  List,
+  Paper,
+  Typography,
+  Checkbox,
+} from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { selectedList } from '../pages/Dashboard'
 import { fetchTasksFromApi } from '../services/api'
@@ -15,6 +21,7 @@ export interface Task {
   description?: null | string
   dueDate?: null | string
   isDeleted: number
+  isCompleted: boolean
 }
 interface TasksListProps {
   selectedLists: selectedList[]
@@ -49,6 +56,15 @@ export const TasksList = ({
     setActiveTextFieldListId(listId)
   }
 
+  // Handle CheckBox toggle
+  const handleToggleCheckBox = (taskId: number) => {
+    // Map all tasks, find correct task, open it and edit isCompleted. All other task is same
+    const newAllTasksList = allTasks.map((task) =>
+      task.id === taskId ? { ...task, isCompleted: !task.isCompleted } : task
+    )
+    setAllTasks(newAllTasksList)
+  }
+
   return (
     <Box
       sx={{
@@ -66,20 +82,25 @@ export const TasksList = ({
           sx={{
             height: 350,
             width: 250,
-            overflowY: 'auto'
+            overflowY: 'auto',
           }}
         >
           {/* Top Box for title and buttons*/}
           <Box
+            sx={{
+              borderBottom: '1px solid rgba(0,0,0,0.12)',
+            }}
+            padding={2}
             display="flex"
             justifyContent="space-between"
             alignItems="center"
           >
-            <Typography variant="h6" align="left" sx={{ mt: 2, ml: 2 }}>
-              {list.listName}
-            </Typography>
+            {/* Box for List name */}
+            <Box>
+              <Typography variant="h6">{list.listName}</Typography>
+            </Box>
             {/* Box for buttons */}
-            <Box sx={{ display: 'flex', mt: 1 }}>
+            <Box>
               <MinimizeTaskListButton
                 selectedLists={selectedLists}
                 setSelectedLists={setSelectedLists}
@@ -91,8 +112,7 @@ export const TasksList = ({
               />
             </Box>
           </Box>
-          <Divider sx={{ mt: 1 }} />
-          {/* Map all tasks in selectedList */}
+          {/* Tasks Section */}
           <List key={list.listId}>
             {/* Add Task input field */}
             {activeTextFieldListId === list.listId && (
@@ -113,23 +133,33 @@ export const TasksList = ({
               .map((task: Task) => (
                 <Box
                   key={task.id}
+                  className="hover-box"
                   display="flex"
                   justifyContent="space-between"
                   alignItems="center"
+                  sx={{
+                    padding: 1,
+                    marginBottom: 1,
+                    borderRadius: 1,
+                  }}
                 >
-                  <ListItem
-                  secondaryAction={
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <Checkbox
+                      size="small"
+                      checked={!!task.isCompleted}
+                      onClick={() => handleToggleCheckBox(task.id)}
+                    />
+                    {/* Task Title */}
+                    <Typography>{task.title}</Typography>
+                  </Box>
+                  {/* Delete Task Button */}
+                  <Box>
                     <DeleteTaskButton
                       taskId={task.id}
                       allTasks={allTasks}
                       setAllTasks={setAllTasks}
-                    />}
-                  >
-                    {/* Task Title */}
-                    <ListItemText>{task.title}</ListItemText>
-                    {/* Delete Button */}
-                  </ListItem>
-                  <Divider component="li" />
+                    />
+                  </Box>
                 </Box>
               ))}
           </List>

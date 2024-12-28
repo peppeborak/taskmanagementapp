@@ -25,7 +25,7 @@ export const DeleteTaskButton = ({ taskId, allTasks, setAllTasks }: Props) => {
   }
 
   return (
-    <IconButton size="small" onClick={handleDeleteTask}>
+    <IconButton size="small" onClick={handleDeleteTask} edge="end">
       <ClearIcon />
     </IconButton>
   )

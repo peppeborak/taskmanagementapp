@@ -40,6 +40,7 @@ export const AddTaskInputField = ({
         description: null,
         dueDate: null,
         isDeleted: 0,
+        isCompleted: false
       }
       const updatedTasksList = [newTask, ...allTasks] // Old array + new task
       setAllTasks(updatedTasksList)
