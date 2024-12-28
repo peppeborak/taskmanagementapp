@@ -1,6 +1,4 @@
-import { ThemeProvider } from '@emotion/react'
-import { darkTheme } from '../theme/theme'
-import { CssBaseline, Grid2 } from '@mui/material'
+import { Grid2 } from '@mui/material'
 import { SideBarList } from '../components/SideBarList'
 import { useState } from 'react'
 import { TasksList } from '../components/TasksList'
@@ -15,8 +13,7 @@ export const Dashboard = () => {
   const [selectedLists, setSelectedLists] = useState<selectedList[]>([])
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
+    <>
       {/* NavBar */}
       <NavBar />
 
@@ -37,6 +34,6 @@ export const Dashboard = () => {
           />
         </Grid2>
       </Grid2>
-    </ThemeProvider>
+    </>
   )
 }
