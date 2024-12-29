@@ -1,7 +1,8 @@
-import { Box, Button, IconButton, Toolbar, Typography } from '@mui/material'
+import { Box, IconButton, Toolbar, Typography } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 
 import MenuIcon from '@mui/icons-material/Menu'
+import { LogoutButton } from './LogoutButton'
 
 export const NavBar = () => {
   return (
@@ -21,7 +22,7 @@ export const NavBar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Task Management App
           </Typography>
-          <Button color="inherit">Logout</Button>
+          <LogoutButton/>
         </Toolbar>
       </AppBar>
     </Box>
