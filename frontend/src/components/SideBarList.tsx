@@ -95,9 +95,7 @@ export const SideBarList = ({
                 <Typography
                   sx={{
                     textAlign: 'left',
-                    overflow: 'hidden',
-                    whiteSpace: 'nowrap',
-                    textOverflow: 'ellipsis',
+                    wordBreak: 'break-word',
                   }}
                 >
                   {list.name}

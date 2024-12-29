@@ -1,10 +1,4 @@
-import {
-  Box,
-  List,
-  Paper,
-  Typography,
-  Checkbox,
-} from '@mui/material'
+import { Box, Paper, Typography, Checkbox } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { selectedList } from '../pages/Dashboard'
 import { fetchTasksFromApi } from '../services/api'
@@ -69,38 +63,50 @@ export const TasksList = ({
     <Box
       sx={{
         display: 'flex',
-        flexWrap: 'wrap', // Allow items to wrap to the next row
-        gap: 2,
-        justifyContent: 'flex-start',
+        flexWrap: 'wrap', // Ensures wrapping when there are too many items
+        gap: 2, // Space between the cards
+        justifyContent: 'flex-start', // Aligns items to the left
+        alignItems: 'flex-start', // Ensures items align at the top
       }}
     >
       {/* Map all selected lists */}
       {selectedLists.map((list: selectedList) => (
-        <Paper
+        <Box
+          component={Paper}
           key={list.listId}
           elevation={3}
           sx={{
             height: 350,
             width: 250,
             overflowY: 'auto',
+            borderRadius: 2,
+            flexWrap: 'wrap',
           }}
         >
           {/* Top Box for title and buttons*/}
           <Box
             sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
               borderBottom: '1px solid rgba(0,0,0,0.12)',
+              paddingLeft: 2,
+              marginBottom: 2,
             }}
-            padding={2}
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
           >
             {/* Box for List name */}
-            <Box>
-              <Typography variant="h6">{list.listName}</Typography>
+            <Box sx={{ mt: 1, padding: 0 }}>
+              <Typography
+                variant="h6"
+                sx={{
+                  wordBreak: 'break-word',
+                }}
+              >
+                {list.listName}
+              </Typography>
             </Box>
             {/* Box for buttons */}
-            <Box>
+            <Box sx={{ display: 'flex', gap: 1, padding: 1 }}>
               <MinimizeTaskListButton
                 selectedLists={selectedLists}
                 setSelectedLists={setSelectedLists}
@@ -113,57 +119,62 @@ export const TasksList = ({
             </Box>
           </Box>
           {/* Tasks Section */}
-          <List key={list.listId}>
-            {/* Add Task input field */}
-            {activeTextFieldListId === list.listId && (
-              <AddTaskInputField
-                listId={list.listId}
-                allTasks={allTasks}
-                setAllTasks={setAllTasks}
-                newTaskTitle={newTaskTitle}
-                setNewTaskTitle={setNewTaskTitle}
-                setActiveTextFieldListId={setActiveTextFieldListId}
-              />
-            )}
-            {/* Map all tasks with listId */}
-            {allTasks
-              .filter(
-                (task) => task.listId === list.listId && task.isDeleted === 0
-              )
-              .map((task: Task) => (
-                <Box
-                  key={task.id}
-                  className="hover-box"
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  sx={{
-                    padding: 1,
-                    marginBottom: 1,
-                    borderRadius: 1,
-                  }}
-                >
-                  <Box display="flex" alignItems="center" gap={1}>
-                    <Checkbox
-                      size="small"
-                      checked={!!task.isCompleted}
-                      onClick={() => handleToggleCheckBox(task.id)}
-                    />
-                    {/* Task Title */}
-                    <Typography>{task.title}</Typography>
-                  </Box>
-                  {/* Delete Task Button */}
-                  <Box>
-                    <DeleteTaskButton
-                      taskId={task.id}
-                      allTasks={allTasks}
-                      setAllTasks={setAllTasks}
-                    />
-                  </Box>
+          {/* Add Task input field */}
+          {activeTextFieldListId === list.listId && (
+            <AddTaskInputField
+              listId={list.listId}
+              allTasks={allTasks}
+              setAllTasks={setAllTasks}
+              newTaskTitle={newTaskTitle}
+              setNewTaskTitle={setNewTaskTitle}
+              setActiveTextFieldListId={setActiveTextFieldListId}
+            />
+          )}
+          {allTasks
+            .filter(
+              (task) => task.listId === list.listId && task.isDeleted === 0
+            )
+            .map((task: Task) => (
+              <Box
+                key={task.id}
+                className="hover-box"
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                sx={{
+                  padding: 1,
+                  marginBottom: 1,
+                  borderRadius: 1,
+                }}
+              >
+                <Box display="flex" alignItems="center" gap={1}>
+                  <Checkbox
+                    size="small"
+                    checked={!!task.isCompleted}
+                    onClick={() => handleToggleCheckBox(task.id)}
+                  />
+                  {/* Task Title */}
+                  <Typography
+                    sx={{
+                      textDecoration: task.isCompleted
+                        ? 'line-through'
+                        : 'none',
+                    }}
+                  >
+                    {task.title}
+                  </Typography>
                 </Box>
-              ))}
-          </List>
-        </Paper>
+                {/* Delete Task Button */}
+                <Box>
+                  <DeleteTaskButton
+                    taskId={task.id}
+                    allTasks={allTasks}
+                    setAllTasks={setAllTasks}
+                  />
+                </Box>
+              </Box>
+            ))}
+        </Box>
       ))}
     </Box>
   )
