@@ -5,16 +5,19 @@ import { Notfound } from './pages/Notfound'
 import { Dashboard } from './pages/Dashboard'
 import ProtectedRoutes from './utils/ProtectedRoutes'
 import { CssBaseline, ThemeProvider } from '@mui/material'
-import { darkTheme } from './theme/theme'
+import { darkTheme, lightTheme } from './theme/theme'
+import { useState } from 'react'
 
 function App() {
+  const [isDarkMode, setIsDarkMode] = useState(true) // State to toggle themes
+
   return (
     <>
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
         <CssBaseline />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<Login isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode}/>} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/*" element={<Notfound />} />
 

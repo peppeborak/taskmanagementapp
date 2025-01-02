@@ -1,13 +1,14 @@
-import { Container, ThemeProvider } from '@mui/material'
-import { lightTheme, darkTheme } from '../theme/theme' // Import both themes
-import { useState } from 'react'
+import { Container } from '@mui/material'
 import { LoginCard } from '../components/LoginCard'
 
-export const Login = () => {
-  const [isDarkMode, setIsDarkMode] = useState(true) // State to toggle themes
+type Props = {
+  isDarkMode: any
+  setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export const Login = ({isDarkMode, setIsDarkMode}: Props) => {
 
   return (
-    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <Container
         maxWidth="sm" // Set container to small
         sx={{
@@ -17,8 +18,7 @@ export const Login = () => {
           height: '100vh',
         }}
       >
-        <LoginCard setIsDarkMode={setIsDarkMode} isDarkMode={isDarkMode} />
+        <LoginCard isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
       </Container>
-    </ThemeProvider>
   )
 }
