@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import { TokenUser } from './utils'
+import { TokenUser } from '../types'
 import jwt from 'jsonwebtoken'
 
 declare module 'express-serve-static-core' {

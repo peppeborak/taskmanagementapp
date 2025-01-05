@@ -13,10 +13,10 @@ const pool = mysql.createPool({
   queueLimit: 0,
 })
 
-export const createUserDb = async ({
-  email,
-  passwordHash,
-}: User): Promise<number> => {
+export const createUserDb = async (
+  email: string,
+  passwordHash: string
+): Promise<number> => {
   const [result] = await pool.query<ResultSetHeader>(
     'INSERT INTO users (email, passwordHash) VALUES (?, ?)',
     [email, passwordHash]
