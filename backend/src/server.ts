@@ -48,6 +48,8 @@ app.put('/api/v1/tasks/:id', authenticateToken, taskUpdateHandler)
 app.delete('/api/v1/tasks/:id', authenticateToken, taskDeleteHandler)
 
 // Server
+/* 
 app.listen(process.env.PORT, () => {
   console.log('Server running on port:', process.env.PORT)
-})
+}) 
+*/
