@@ -22,7 +22,6 @@ export const loginHandler = async (
 
     // Query the user from the database
     const user = await getUserDb(email)
-    console.log(user)
 
     // Check if user exists
     if (!user) {

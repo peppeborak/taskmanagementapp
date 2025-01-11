@@ -42,7 +42,7 @@ describe('POST /api/v1/login', () => {
     const response = await supertest(app)
       .post('/api/v1/login')
       .send({ email: email, password: password })
-    console.log(response.body)
+
 
     expect(response.statusCode).toBe(401)
     expect(response.body).toEqual({ message: 'Invalid password' })
