@@ -18,6 +18,22 @@ const hashSpy = jest
 const compareSpy = jest.spyOn(mockBcrypt, 'compare').mockReturnValue(true)
 
 describe('POST /api/v1/login', () => {
+  it('Should return successful login', async () => {
+    const email = 'peppe@test.com'
+    const password = 'peppe123'
+
+    const response = await supertest(app)
+      .post('/api/v1/login')
+      .send({ email: email, password: password })
+
+    expect(response.statusCode).toBe(200)
+    expect(response.body).toEqual({
+      email: 'peppe@test.com',
+      message: 'Login successful!',
+      token: expect.any(String),
+    })
+  })
+
   it('Should return incorrect password', async () => {
     const email = 'peppe@test.com'
     const password = 'peppe123'
@@ -30,22 +46,5 @@ describe('POST /api/v1/login', () => {
 
     expect(response.statusCode).toBe(401)
     expect(response.body).toEqual({ message: 'Invalid password' })
-  })
-
-  it('Should return successful login', async () => {
-    const email = 'peppe@test.com'
-    const password = 'peppe123'
-
-    const response = await supertest(app)
-      .post('/api/v1/login')
-      .send({ email: email, password: password })
-    console.log(response.body)
-
-    expect(response.statusCode).toBe(200)
-    expect(response.body).toEqual({
-      email: 'peppe@test.com',
-      message: 'Login successful!',
-      token: expect.any(String),
-    })
   })
 })
