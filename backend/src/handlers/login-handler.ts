@@ -6,7 +6,6 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-
 export const loginHandler = async (
   req: Request,
   res: Response
@@ -37,9 +36,13 @@ export const loginHandler = async (
     }
 
     // Generate JWT
-    const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET as string,  {
-      expiresIn: '1h',
-    })
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.JWT_SECRET as string,
+      {
+        expiresIn: '1h',
+      }
+    )
 
     // Respond with the token
     res

@@ -30,9 +30,7 @@ describe('POST api/v1/lists', () => {
   })
 
   it('Should return 400 if listName is missing', async () => {
-    const response = await supertest(app)
-      .post('/api/v1/lists')
-      .send({})
+    const response = await supertest(app).post('/api/v1/lists').send({})
 
     expect(response.statusCode).toBe(400)
     expect(response.body).toEqual({ message: 'List name is required' })
