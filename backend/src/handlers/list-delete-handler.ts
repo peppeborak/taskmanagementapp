@@ -18,7 +18,7 @@ export const listDeleteHandler = async (
     const list = await listFetchOneDb(userId, listId)
 
     // Validate list
-    if (!list) {
+    if (list.length === 0) {
       res.status(400).json({ message: 'List does not exist' })
       return
     }

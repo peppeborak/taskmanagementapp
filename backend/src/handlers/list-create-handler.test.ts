@@ -8,7 +8,7 @@ jest.mock('../utils/db-queries', () => {
 })
 
 describe('POST api/v1/lists', () => {
-  it('Should return 201 and id of created list', async () => {
+  it('should return 201 and id of created list', async () => {
     const response = await supertest(app)
       .post('/api/v1/lists')
       .send({ listName: 'test' })
@@ -20,7 +20,7 @@ describe('POST api/v1/lists', () => {
     })
   })
 
-  it('Should return 400 and list name is required', async () => {
+  it('should return 400 and list name is required', async () => {
     const response = await supertest(app)
       .post('/api/v1/lists')
       .send({ listName: '' })
@@ -29,7 +29,7 @@ describe('POST api/v1/lists', () => {
     expect(response.body).toEqual({ message: 'List name is required' })
   })
 
-  it('Should return 400 if listName is missing', async () => {
+  it('should return 400 if listName is missing', async () => {
     const response = await supertest(app).post('/api/v1/lists').send({})
 
     expect(response.statusCode).toBe(400)
