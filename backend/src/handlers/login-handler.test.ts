@@ -18,7 +18,7 @@ const hashSpy = jest
 const compareSpy = jest.spyOn(mockBcrypt, 'compare').mockReturnValue(true)
 
 describe('POST /api/v1/login', () => {
-  it('Should return successful login', async () => {
+  it('should return successful login', async () => {
     const email = 'peppe@test.com'
     const password = 'peppe123'
 
@@ -34,7 +34,7 @@ describe('POST /api/v1/login', () => {
     })
   })
 
-  it('Should return incorrect password', async () => {
+  it('should return incorrect password', async () => {
     const email = 'peppe@test.com'
     const password = 'peppe123'
 
@@ -42,7 +42,6 @@ describe('POST /api/v1/login', () => {
     const response = await supertest(app)
       .post('/api/v1/login')
       .send({ email: email, password: password })
-
 
     expect(response.statusCode).toBe(401)
     expect(response.body).toEqual({ message: 'Invalid password' })
