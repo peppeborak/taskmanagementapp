@@ -1,6 +1,8 @@
 import supertest from 'supertest'
 import { app } from '../server'
+import { listDeleteDb } from '../utils/db-queries'
 import * as dbQueries from '../utils/db-queries'
+import { List } from '../types'
 
 jest.mock('../utils/db-queries', () => {
   return {
