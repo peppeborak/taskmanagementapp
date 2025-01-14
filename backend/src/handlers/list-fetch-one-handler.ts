@@ -9,6 +9,12 @@ export const listFetchOneHandler = async (
     const listId = +req.params.id
     const userId = req.user.id
 
+    // Validate listId
+    if (isNaN(listId) || listId <= 0) {
+      res.status(400).json({ message: 'Invalid list id' })
+      return
+    }
+
     // Validate userId
     if (!userId || isNaN(userId)) {
       res.status(400).json({ message: 'User id is required' })
