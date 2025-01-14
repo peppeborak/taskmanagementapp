@@ -15,6 +15,7 @@ import { taskFetchAllHandler } from './handlers/task-fetch-all-handler'
 import { taskFetchOneHandler } from './handlers/task-fetch-one-handler'
 import { taskUpdateHandler } from './handlers/task-update-handler'
 import { taskDeleteHandler } from './handlers/task-delete-handler'
+import { signupHandler } from './handlers/signup-handler'
 
 dotenv.config()
 
@@ -30,7 +31,7 @@ app.use(
 app.use(bodyParser.json())
 
 // Auth routes
-
+app.post('/api/v1/signup', signupHandler)
 app.post('/api/v1/login', loginHandler)
 
 // List endpoints
@@ -48,8 +49,7 @@ app.put('/api/v1/tasks/:id', authenticateToken, taskUpdateHandler)
 app.delete('/api/v1/tasks/:id', authenticateToken, taskDeleteHandler)
 
 // Server
-/* 
+
 app.listen(process.env.PORT, () => {
   console.log('Server running on port:', process.env.PORT)
 }) 
-*/
