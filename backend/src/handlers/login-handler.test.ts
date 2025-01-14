@@ -35,7 +35,7 @@ describe('POST /api/v1/login', () => {
     })
   })
 
-  it('should return 400 and Email is required if email is empty', async () => {
+  it('should return 400 if email is empty', async () => {
     const response = await supertest(app)
       .post('/api/v1/login')
       .send({ email: '', password: 'test' })
@@ -46,7 +46,7 @@ describe('POST /api/v1/login', () => {
     })
   })
 
-  it('should return 400 and Email is required if email is whitespace only', async () => {
+  it('should return 400 if email is whitespace only', async () => {
     const response = await supertest(app)
       .post('/api/v1/login')
       .send({ email: '     ', password: 'test' })
@@ -57,7 +57,7 @@ describe('POST /api/v1/login', () => {
     })
   })
 
-  it('should return 400 and Password is required if password is whitespace only', async () => {
+  it('should return 400 if password is whitespace only', async () => {
     const response = await supertest(app)
       .post('/api/v1/login')
       .send({ email: 'test@test.com', password: '     ' })
@@ -68,7 +68,7 @@ describe('POST /api/v1/login', () => {
     })
   })
 
-  it('should return 400 and Password is required if password is empty', async () => {
+  it('should return 400 if password is empty', async () => {
     const response = await supertest(app)
       .post('/api/v1/login')
       .send({ email: 'test@test.com', password: '' })
@@ -88,7 +88,7 @@ describe('POST /api/v1/login', () => {
     expect(response.body).toEqual({ message: 'Invalid email format' })
   })
 
-  it('should return 401 and Invalid email or password if wrong password', async () => {
+  it('should return 401 if wrong password', async () => {
     compareSpy.mockReturnValueOnce(false)
     const response = await supertest(app)
       .post('/api/v1/login')
@@ -98,7 +98,7 @@ describe('POST /api/v1/login', () => {
     expect(response.body).toEqual({ message: 'Invalid email or password' })
   })
 
-  it('should return 401 and Invalid email or password if user does not exist', async () => {
+  it('should return 401 if the user does not exist', async () => {
     jest
       .spyOn(dbQueries, 'getUserDb')
       .mockReturnValueOnce(Promise.resolve(undefined as any))

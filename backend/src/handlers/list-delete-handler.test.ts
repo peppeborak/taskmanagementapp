@@ -16,9 +16,6 @@ jest.mock('../utils/db-queries', () => {
   }
 })
 
-afterEach(() => {
-  jest.clearAllMocks()
-})
 
 describe('DELETE api/v1/lists/id', () => {
   it('should return 200 and Successfully deleted list', async () => {
