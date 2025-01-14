@@ -112,7 +112,7 @@ describe('POST /api/v1/login', () => {
   })
 
   it('should return 500 if database query fails', async () => {
-    jest.spyOn(dbQueries, 'getUserDb').mockRejectedValue(new Error('DB error'))
+    jest.spyOn(dbQueries, 'getUserDb').mockRejectedValueOnce(new Error('DB error'))
 
     const response = await supertest(app)
       .post('/api/v1/login')

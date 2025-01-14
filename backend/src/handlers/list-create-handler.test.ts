@@ -49,7 +49,7 @@ describe('POST api/v1/lists', () => {
   it('should return 500 if database query fails', async () => {
     jest
       .spyOn(dbQueries, 'listCreateDb')
-      .mockRejectedValue(new Error('DB error'))
+      .mockRejectedValueOnce(new Error('DB error'))
 
       const response = await supertest(app)
       .post('/api/v1/lists')

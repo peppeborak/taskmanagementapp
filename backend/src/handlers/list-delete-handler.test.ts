@@ -48,7 +48,7 @@ describe('DELETE api/v1/lists/id', () => {
   })
 
   it('should return 500 if database query fails', async () => {
-    jest.spyOn(dbQueries, 'listFetchOneDb').mockRejectedValue(new Error('DB error'))
+    jest.spyOn(dbQueries, 'listFetchOneDb').mockRejectedValueOnce(new Error('DB error'))
 
     const response = await supertest(app)
       .delete('/api/v1/lists/1')
