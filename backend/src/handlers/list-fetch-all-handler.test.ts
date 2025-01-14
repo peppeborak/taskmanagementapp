@@ -21,7 +21,7 @@ jest.mock('../utils/db-queries', () => {
 })
 
 describe('GET api/v1/lists', () => {
-  it('Should return 200 and an array with 2 lists', async () => {
+  it('should return 200 and an array with 2 lists', async () => {
     const response = await supertest(app).get('/api/v1/lists').send()
 
     expect(response.statusCode).toBe(200)

@@ -17,9 +17,10 @@ export const listFetchOneHandler = async (
 
     // Query database
     const list = await listFetchOneDb(userId, listId)
+    // Db returns an array
 
-    // Check if list exists
-    if (!list) {
+    // Check if array is empty
+    if (list.length === 0) {
       res.status(404).json({ message: 'List not found' })
       return
     }
