@@ -18,14 +18,14 @@ jest.mock('../utils/db-queries', () => {
 
 
 describe('DELETE api/v1/lists/id', () => {
-  it('should return 200 and Successfully deleted list', async () => {
+  it('should return 200 if successful', async () => {
     const response = await supertest(app).delete('/api/v1/lists/1').send()
 
     expect(response.statusCode).toBe(200)
     expect(response.body).toEqual({ message: 'Successfully deleted list' })
   })
 
-  it('should return 400 and list does not exist', async () => {
+  it('should return 400 if list does not exist', async () => {
     jest
       .spyOn(dbQueries, 'listFetchOneDb')
       .mockReturnValueOnce(Promise.resolve([]))
@@ -36,7 +36,7 @@ describe('DELETE api/v1/lists/id', () => {
     expect(response.body).toEqual({ message: 'List does not exist' })
   })
 
-  it('should return 400 and failed to delete list', async () => {
+  it('should return 400 if failed to delete list', async () => {
     jest
       .spyOn(dbQueries, 'listDeleteDb')
       .mockReturnValueOnce(Promise.resolve(0))
@@ -45,5 +45,16 @@ describe('DELETE api/v1/lists/id', () => {
 
     expect(response.statusCode).toBe(400)
     expect(response.body).toEqual({ message: 'Failed to delete list' })
+  })
+
+  it('should return 500 if database query fails', async () => {
+    jest.spyOn(dbQueries, 'listFetchOneDb').mockRejectedValue(new Error('DB error'))
+
+    const response = await supertest(app)
+      .delete('/api/v1/lists/1')
+      .send()
+
+    expect(response.statusCode).toBe(500)
+    expect(response.body).toEqual({ message: 'Internal Server Error' })
   })
 })
