@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 import { getUserDb } from '../utils/db-queries'
 import { Request, Response } from 'express'
 import dotenv from 'dotenv'
+import validator from 'validator'
 
 dotenv.config()
 
@@ -13,9 +14,21 @@ export const loginHandler = async (
   try {
     const { email, password } = req.body
 
-    // Validate email and password
-    if (!email || !password) {
-      res.status(400).send('Email and password are required')
+    // Validate email
+    if (!email || email.trim() == '') {
+      res.status(400).json({ message: 'Email is required' })
+      return
+    }
+
+    // Validate password
+    if (!password || password.trim() == '') {
+      res.status(400).json({ message: 'Password is required' })
+      return
+    }
+
+    // Check if email is valid
+    if (!validator.isEmail(email)) {
+      res.status(400).json({ message: 'Invalid email format' })
       return
     }
 
@@ -24,14 +37,14 @@ export const loginHandler = async (
 
     // Check if user exists
     if (!user) {
-      res.status(404).json({ message: 'User not found' })
+      res.status(401).json({ message: 'Invalid email or password' })
       return
     }
 
     // Compare passwords
     const passwordMatch = await bcrypt.compare(password, user.passwordHash)
     if (!passwordMatch) {
-      res.status(401).json({ message: 'Invalid password' })
+      res.status(401).json({ message: 'Invalid email or password' })
       return
     }
 
