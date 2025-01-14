@@ -9,7 +9,7 @@ jest.mock('../utils/db-queries', () => {
 })
 
 describe('POST api/v1/lists', () => {
-  it('should return 201 and id of created list', async () => {
+  it('should return 201 and id of the created list', async () => {
     const response = await supertest(app)
       .post('/api/v1/lists')
       .send({ listName: 'test' })
@@ -21,7 +21,7 @@ describe('POST api/v1/lists', () => {
     })
   })
 
-  it('should return 400 and list name is required if list name is empty', async () => {
+  it('should return 400 if list name is empty', async () => {
     const response = await supertest(app)
       .post('/api/v1/lists')
       .send({ listName: '' })
@@ -30,14 +30,14 @@ describe('POST api/v1/lists', () => {
     expect(response.body).toEqual({ message: 'List name is required' })
   })
 
-  it('should return 400 if listName is missing', async () => {
+  it('should return 400 if list name is missing', async () => {
     const response = await supertest(app).post('/api/v1/lists').send({})
 
     expect(response.statusCode).toBe(400)
     expect(response.body).toEqual({ message: 'List name is required' })
   })
 
-  it('should return 400 and list name is required if list name is whitespaces', async () => {
+  it('should return 400 if list name is whitespaces', async () => {
     const response = await supertest(app)
       .post('/api/v1/lists')
       .send({ listName: '     ' })
@@ -51,11 +51,11 @@ describe('POST api/v1/lists', () => {
       .spyOn(dbQueries, 'listCreateDb')
       .mockRejectedValue(new Error('DB error'))
 
-    const response = await supertest(app)
-      .post('/api/v1/login')
-      .send({ email: 'test@test.com', password: 'test123' })
+      const response = await supertest(app)
+      .post('/api/v1/lists')
+      .send({ listName: 'test' })
 
     expect(response.statusCode).toBe(500)
-    expect(response.body).toEqual({ message: 'An error occurred during login' })
+    expect(response.body).toEqual({ message: 'Internal Server Error' })
   })
 })

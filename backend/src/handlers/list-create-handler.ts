@@ -1,17 +1,12 @@
 import { Request, Response } from 'express'
 import { listCreateDb } from '../utils/db-queries'
 
-
-export const listCreateHandler = async (req: Request, res: Response): Promise<void> => {
+export const listCreateHandler = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const { listName } = req.body
-
-    // Ensure req.user is defined
-    if (!req.user || !req.user.id) {
-      res.status(401).json({ message: 'Unauthorized' })
-      return
-    }
-
     const userId = req.user.id
 
     // Validate listName
@@ -30,14 +25,14 @@ export const listCreateHandler = async (req: Request, res: Response): Promise<vo
     const listId = await listCreateDb({ userId, listName })
 
     // Respond with the list
-     res.status(201).json({
+    res.status(201).json({
       message: 'Successfully created list',
       list: { id: listId, userId: userId, name: listName },
     })
-    return 
+    return
   } catch (err) {
     console.error(err)
     res.status(500).json({ message: 'Internal Server Error' })
-    return 
+    return
   }
 }
