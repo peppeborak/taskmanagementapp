@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { listUpdateDb } from '../utils/db-queries'
+import { listFetchOneDb, listUpdateDb } from '../utils/db-queries'
 
 export const listUpdateHandler = async (
   req: Request,
@@ -25,6 +25,16 @@ export const listUpdateHandler = async (
     // Validate userId
     if (!userId || isNaN(userId)) {
       res.status(400).json({ message: 'User id is required' })
+      return
+    }
+
+    // Check if the list exists and belongs to the user
+    const list = await listFetchOneDb(listId, userId)
+
+    console.log(list)
+    // Check if array is empty
+    if (list.length === 0) {
+      res.status(404).json({ message: 'List not found' })
       return
     }
 

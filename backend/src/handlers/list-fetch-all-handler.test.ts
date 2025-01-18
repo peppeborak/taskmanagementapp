@@ -52,6 +52,6 @@ describe('GET api/v1/lists', () => {
     const response = await supertest(app).get('/api/v1/lists').send()
 
     expect(response.statusCode).toBe(500)
-    expect(response.body).toEqual({message: 'Internal Server Error'})
+    expect(response.body).toEqual({ message: 'Internal Server Error' })
   })
 })
