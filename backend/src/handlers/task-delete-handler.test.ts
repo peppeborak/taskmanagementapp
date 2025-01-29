@@ -27,15 +27,15 @@ describe('DELETE api/v1/tasks/id', () => {
     expect(response.statusCode).toBe(400)
     expect(response.body).toEqual({ message: 'Invalid task id' })
   })
-  it('should return 400 if delete query fails', async () => {
+  it('should return 404 if task does not exist', async () => {
     jest
       .spyOn(dbQueries, 'taskDeleteDb')
       .mockReturnValueOnce(Promise.resolve(0))
 
     const response = await supertest(app).delete('/api/v1/tasks/1').send()
 
-    expect(response.statusCode).toBe(400)
-    expect(response.body).toEqual({ message: 'Failed to delete task' })
+    expect(response.statusCode).toBe(404)
+    expect(response.body).toEqual({ message: 'Task does not exist' })
   })
   it('should return 500 if db query fails', async () => {
     jest
