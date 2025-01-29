@@ -9,9 +9,9 @@ export const taskCreateHandler = async (
     const { listId, taskTitle, taskDescription } = req.body
     const userId = req.user.id
 
-    // Validate taskName
+    // Validate taskTitle
     if (!taskTitle || taskTitle.trim() == '') {
-      res.status(400).json({ message: 'Task name is required' })
+      res.status(400).json({ message: 'Task title is required' })
       return
     }
     // Validate userId
@@ -20,7 +20,7 @@ export const taskCreateHandler = async (
       return
     }
     // Query database
-    const taskId = await taskCreateDb(
+    const response = await taskCreateDb(
       userId,
       listId,
       taskTitle,
@@ -30,7 +30,7 @@ export const taskCreateHandler = async (
     // Respond with the task id and task name
     res.status(201).json({
       message: 'Successfully created task',
-      task: { userId: userId, taskId: taskId, name: taskTitle },
+      task: { userId: userId, taskId: response, name: taskTitle },
     })
     return
   } catch (err) {
