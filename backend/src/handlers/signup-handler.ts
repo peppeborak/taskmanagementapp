@@ -9,9 +9,14 @@ export const signupHandler = async (
   try {
     const { email, password } = req.body
 
-    // Validate input
-    if (!email || !password) {
-      res.status(400).send('Email and password is required')
+    // Validate email
+    if (!email || email.trim() === '') {
+      res.status(400).json({ message: 'Email is required' })
+      return
+    }
+    // Validate password
+    if (!password || password.trim() === '') {
+      res.status(400).json({ message: 'Password is required' })
       return
     }
 
