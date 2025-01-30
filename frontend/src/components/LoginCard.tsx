@@ -29,7 +29,7 @@ export const LoginCard = ({ setIsDarkMode, isDarkMode }: Props) => {
       const data = await loginPost({ email, password })
       localStorage.setItem('token', data.token) // Save token in local storage
       console.log('Login successful')
-      navigate('/dashboard') // Navigate to their dashboard when login is successful
+      navigate('/dashboard') // Navigate to dashboard when login is successful
     } catch (error: any) {
       console.log('Error:', error)
       throw error
@@ -48,6 +48,10 @@ export const LoginCard = ({ setIsDarkMode, isDarkMode }: Props) => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setPassword(event.target.value) // Update password variable with value from inputfield
+  }
+
+  const handleRedirectClick = () => {
+    navigate('/signup')
   }
 
   return (
@@ -113,9 +117,21 @@ export const LoginCard = ({ setIsDarkMode, isDarkMode }: Props) => {
             size="large"
             onClick={() => setIsDarkMode(!isDarkMode)}
           >
-            Toggle Dark Mode
+            Dark Mode
           </Button>
         </CardActions>
+        <Typography
+            align="center"
+            sx={{
+              '&:hover': {
+                color: 'lightblue',
+                cursor: 'pointer',
+              },
+            }}
+            onClick={handleRedirectClick}
+          >
+            Don't have an account?
+          </Typography>
       </Card>
     </>
   )

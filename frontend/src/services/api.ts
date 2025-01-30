@@ -8,6 +8,14 @@ interface LoginResponse {
   message: string
   token: string
 }
+interface SignupRequestProps {
+  email: string
+  password: string
+}
+interface SignupResponse {
+  message: string
+  result: number
+}
 
 // API URL for backend requests
 const API_URL = 'http://localhost:3000/api/v1'
@@ -20,7 +28,24 @@ const api = axios.create({
   },
 })
 
-// Login API requests
+// Auth API requests
+
+export const signupToApi = async ({
+  email,
+  password,
+}: SignupRequestProps): Promise<SignupResponse> => {
+  try {
+    const response = await api.post('/signup', {
+      email: email,
+      password: password,
+    })
+    return response.data
+  } catch (error) {
+    console.error('Error:', error)
+    throw error
+  }
+}
+
 export const loginPost = async ({
   email,
   password,
