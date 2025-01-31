@@ -10,6 +10,7 @@ import {
 import { useState } from 'react'
 import { loginPost } from '../services/api.ts'
 import { useNavigate } from 'react-router-dom'
+import { LoginNotificationBanner } from './LoginNotificationBanner.tsx'
 
 type Props = {
   setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>
@@ -17,8 +18,12 @@ type Props = {
 }
 
 export const LoginCard = ({ setIsDarkMode, isDarkMode }: Props) => {
-  const [password, setPassword] = useState('') // Store user entered password
-  const [email, setEmail] = useState('') // Store user entered password
+  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [loginNotificationSeverity, setLoginNotificationSeverity] = useState<
+    string | null
+  >(null)
+
   const isEmailValid = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
   const navigate = useNavigate()
@@ -29,8 +34,9 @@ export const LoginCard = ({ setIsDarkMode, isDarkMode }: Props) => {
       const data = await loginPost({ email, password })
       localStorage.setItem('token', data.token) // Save token in local storage
       console.log('Login successful')
-      navigate('/dashboard') // Navigate to dashboard when login is successful
+      navigate('/dashboard') // Navigate to dashboard
     } catch (error: any) {
+      setLoginNotificationSeverity('error')
       console.log('Error:', error)
       throw error
     }
@@ -40,14 +46,14 @@ export const LoginCard = ({ setIsDarkMode, isDarkMode }: Props) => {
   const handleEmailTextfieldChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setEmail(event.target.value) // Update email variable with value from inputfield
+    setEmail(event.target.value)
   }
 
   // Handle password onChange
   const handlePasswordTextfieldChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setPassword(event.target.value) // Update password variable with value from inputfield
+    setPassword(event.target.value)
   }
 
   const handleRedirectClick = () => {
@@ -67,6 +73,9 @@ export const LoginCard = ({ setIsDarkMode, isDarkMode }: Props) => {
           <Typography variant="h5" gutterBottom align="center">
             Login
           </Typography>
+          <LoginNotificationBanner
+            loginNotificationSeverity={loginNotificationSeverity}
+          />
 
           <Box
             sx={{
@@ -121,17 +130,17 @@ export const LoginCard = ({ setIsDarkMode, isDarkMode }: Props) => {
           </Button>
         </CardActions>
         <Typography
-            align="center"
-            sx={{
-              '&:hover': {
-                color: 'lightblue',
-                cursor: 'pointer',
-              },
-            }}
-            onClick={handleRedirectClick}
-          >
-            Don't have an account?
-          </Typography>
+          align="center"
+          sx={{
+            '&:hover': {
+              color: 'lightblue',
+              cursor: 'pointer',
+            },
+          }}
+          onClick={handleRedirectClick}
+        >
+          Don't have an account?
+        </Typography>
       </Card>
     </>
   )

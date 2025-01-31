@@ -21,23 +21,19 @@ export const SignupCard = () => {
 
   const handleEmailChamge = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value)
-    console.log(email)
   }
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value)
-    console.log(password)
   }
   const handlePasswordVerifyChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setPasswordVerify(event.target.value)
-    console.log(passwordVerify)
   }
 
   const handleSignupClick = async () => {
     try {
-      console.log('click')
       // Check if password === passwordVerify
       if (password !== passwordVerify) {
         console.log('password does not match')
@@ -46,8 +42,7 @@ export const SignupCard = () => {
       }
       console.log('password matches')
       // Create account
-      const response = await signupToApi({ email, password })
-      console.log(response.message)
+      await signupToApi({ email, password })
       // Add notification
       // Login
       const loginResponse = await loginPost({ email, password })
